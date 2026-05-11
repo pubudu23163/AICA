@@ -1,3 +1,6 @@
+bash
+
+cat > /mnt/user-data/outputs/AICA.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="si">
 <head>
@@ -6,689 +9,848 @@
 <title>AI Chartered Accountant — Sri Lanka</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2128;--bg4:#21262d;--bd:#30363d;--bd2:#3d444d;--tx:#e6edf3;--tx2:#8d96a0;--tx3:#656d76;--blue:#1f6feb;--blue2:#388bfd;--bluebg:#1f3148;--green:#3fb950;--greenbg:#1a3a25;--amber:#d29922;--amberbg:#352a06;--red:#f85149;--redbg:#3d1f1f;--r:8px;--rl:12px}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2128;--bg4:#21262d;--bd:#30363d;--bd2:#3d444d;--tx:#e6edf3;--tx2:#8d96a0;--tx3:#656d76;--blue:#1f6feb;--blue2:#388bfd;--bluebg:#1f3148;--green:#3fb950;--greenbg:#1a3a25;--amber:#d29922;--amberbg:#352a06;--red:#f85149;--redbg:#3d1f1f;--purple:#bc8cff;--purplebg:#2d1f4e;--r:8px;--rl:12px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--tx);height:100vh;overflow:hidden}
 .shell{display:flex;height:100vh}
-/* SIDEBAR */
-.sidebar{width:240px;background:var(--bg2);border-right:1px solid var(--bd);display:flex;flex-direction:column;flex-shrink:0}
-.logo-area{padding:18px 16px 14px;border-bottom:1px solid var(--bd)}
+.sidebar{width:230px;background:var(--bg2);border-right:1px solid var(--bd);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sidebar::-webkit-scrollbar{width:3px}.sidebar::-webkit-scrollbar-thumb{background:var(--bd2)}
+.logo-area{padding:14px 14px 12px;border-bottom:1px solid var(--bd);flex-shrink:0}
 .logo-row{display:flex;align-items:center;gap:10px}
-.logo-mark{width:36px;height:36px;background:var(--blue);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.logo-name{font-size:15px;font-weight:600}
-.logo-sub{font-size:11px;color:var(--tx3);margin-top:2px}
-.company-selector{padding:10px 8px;border-bottom:1px solid var(--bd)}
-.company-selector label{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.1em;padding:0 8px;display:block;margin-bottom:4px}
-.company-select{width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:12px;outline:none;cursor:pointer}
-.nav-block{padding:8px 8px 0}
-.nav-label{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.1em;padding:6px 8px 4px}
-.nav-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:13px;color:var(--tx2);transition:all .15s}
+.logo-mark{width:34px;height:34px;background:var(--blue);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.logo-name{font-size:14px;font-weight:600}.logo-sub{font-size:10px;color:var(--tx3);margin-top:1px}
+.co-sel{padding:8px 8px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.co-sel label{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;padding:0 6px;display:block;margin-bottom:3px}
+.co-select{width:100%;padding:6px 8px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:12px;outline:none}
+.nav-block{padding:6px 6px 0}
+.nav-lbl{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;padding:5px 8px 3px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;color:var(--tx2);transition:all .12s}
 .nav-item:hover{background:var(--bg4);color:var(--tx)}
 .nav-item.active{background:var(--bluebg);color:var(--blue2)}
-.nav-item i{width:15px;font-size:14px}
-.sidebar-bottom{margin-top:auto;padding:10px 8px;border-top:1px solid var(--bd)}
-/* MAIN */
+.nav-item i{width:14px;font-size:13px}
+.sb-bottom{margin-top:auto;padding:8px 8px;border-top:1px solid var(--bd);flex-shrink:0}
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.topbar{padding:11px 22px;background:var(--bg2);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.page-heading{font-size:15px;font-weight:600}
-.page-sub{font-size:11px;color:var(--tx3);margin-top:2px}
-.topbar-right{display:flex;align-items:center;gap:8px}
-.btn-primary{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--blue);color:#fff;border:none;border-radius:var(--r);font-size:12px;font-weight:500;cursor:pointer;transition:opacity .15s}
-.btn-primary:hover{opacity:.85}
-.btn-secondary{display:flex;align-items:center;gap:6px;padding:6px 12px;background:transparent;color:var(--tx2);border:1px solid var(--bd2);border-radius:var(--r);font-size:12px;cursor:pointer;transition:all .15s}
-.btn-secondary:hover{background:var(--bg4);color:var(--tx)}
-.btn-danger{display:flex;align-items:center;gap:6px;padding:6px 12px;background:transparent;color:var(--red);border:1px solid var(--redbg);border-radius:var(--r);font-size:12px;cursor:pointer}
-.btn-danger:hover{background:var(--redbg)}
-.content{flex:1;overflow-y:auto;padding:20px}
-.content::-webkit-scrollbar{width:4px}
-.content::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
-.panel{display:none}
-.panel.active{display:block}
-/* CARDS */
-.card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:16px 18px;margin-bottom:14px}
-.card-title{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.topbar{padding:10px 20px;background:var(--bg2);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.page-heading{font-size:15px;font-weight:600}.page-sub{font-size:11px;color:var(--tx3);margin-top:1px}
+.tbr{display:flex;align-items:center;gap:8px}
+.btn-p{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--blue);color:#fff;border:none;border-radius:var(--r);font-size:12px;font-weight:500;cursor:pointer}
+.btn-p:hover{opacity:.85}
+.btn-s{display:flex;align-items:center;gap:6px;padding:6px 12px;background:transparent;color:var(--tx2);border:1px solid var(--bd2);border-radius:var(--r);font-size:12px;cursor:pointer}
+.btn-s:hover{background:var(--bg4);color:var(--tx)}
+.btn-d{padding:5px 10px;background:transparent;color:var(--red);border:1px solid var(--redbg);border-radius:var(--r);font-size:11px;cursor:pointer}
+.content{flex:1;overflow-y:auto;padding:18px}
+.content::-webkit-scrollbar{width:4px}.content::-webkit-scrollbar-thumb{background:var(--bd2)}
+.panel{display:none}.panel.active{display:block}
+.card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:15px 18px;margin-bottom:13px}
+.card-title{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:11px;display:flex;align-items:center;gap:7px}
 .card-title i{color:var(--tx3)}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.stat-card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:14px 16px}
-.stat-lbl{font-size:11px;color:var(--tx3);margin-bottom:6px}
-.stat-val{font-size:20px;font-weight:600}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:13px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:13px}
+.stat-card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:13px 15px}
+.stat-lbl{font-size:11px;color:var(--tx3);margin-bottom:5px}
+.stat-val{font-size:18px;font-weight:600}
 .row-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bd)}
 .row-item:last-child{border-bottom:none}
-.row-label{font-size:13px;color:var(--tx2)}
-.row-val{font-size:13px;font-weight:500}
+.row-label{font-size:13px;color:var(--tx2)}.row-val{font-size:13px;font-weight:500}
 .badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase}
-.b-ok{background:var(--greenbg);color:var(--green)}
-.b-warn{background:var(--amberbg);color:var(--amber)}
-.b-risk{background:var(--redbg);color:var(--red)}
-.b-info{background:var(--bluebg);color:var(--blue2)}
-/* COMPANY PANEL */
-.company-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
-.company-card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:16px;cursor:pointer;transition:all .15s;position:relative}
-.company-card:hover{border-color:var(--blue2)}
-.company-card.selected{border-color:var(--blue);background:var(--bluebg)}
-.company-card .cc-name{font-size:14px;font-weight:600;margin-bottom:4px}
-.company-card .cc-sub{font-size:11px;color:var(--tx3)}
-.company-card .cc-del{position:absolute;top:10px;right:10px;background:transparent;border:none;color:var(--tx3);cursor:pointer;font-size:14px;padding:4px}
-.company-card .cc-del:hover{color:var(--red)}
-.add-company-card{background:var(--bg3);border:1px dashed var(--bd2);border-radius:var(--rl);padding:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--tx3);transition:all .15s;min-height:90px}
-.add-company-card:hover{border-color:var(--blue2);color:var(--blue2)}
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:24px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto}
-.modal h3{font-size:16px;font-weight:600;margin-bottom:16px}
-.form-group{margin-bottom:12px}
-.form-label{font-size:12px;color:var(--tx3);margin-bottom:5px;display:block}
-.form-input,.form-select{width:100%;padding:8px 12px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:13px;outline:none;transition:border .15s}
-.form-input:focus,.form-select:focus{border-color:var(--blue)}
-.form-textarea{width:100%;padding:8px 12px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:13px;outline:none;resize:vertical;min-height:80px}
-.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
-/* UPLOAD */
-.drop-zone{border:2px dashed var(--bd2);border-radius:var(--rl);padding:36px 24px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:16px}
+.b-ok{background:var(--greenbg);color:var(--green)}.b-warn{background:var(--amberbg);color:var(--amber)}
+.b-risk{background:var(--redbg);color:var(--red)}.b-info{background:var(--bluebg);color:var(--blue2)}
+.b-purple{background:var(--purplebg);color:var(--purple)}
+.co-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:18px}
+.co-card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:15px;cursor:pointer;transition:all .15s;position:relative}
+.co-card:hover{border-color:var(--blue2)}.co-card.sel{border-color:var(--blue);background:var(--bluebg)}
+.co-name{font-size:13px;font-weight:600;margin-bottom:3px}.co-sub{font-size:11px;color:var(--tx3)}
+.co-del{position:absolute;top:9px;right:9px;background:transparent;border:none;color:var(--tx3);cursor:pointer;font-size:13px;padding:3px}
+.co-del:hover{color:var(--red)}
+.add-co{background:var(--bg3);border:1px dashed var(--bd2);border-radius:var(--rl);padding:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;color:var(--tx3);transition:all .15s;min-height:80px}
+.add-co:hover{border-color:var(--blue2);color:var(--blue2)}
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center}
+.modal-ov.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);padding:22px;width:460px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.modal h3{font-size:15px;font-weight:600;margin-bottom:14px}
+.fg{margin-bottom:11px}.flbl{font-size:11px;color:var(--tx3);margin-bottom:4px;display:block}
+.fi{width:100%;padding:7px 11px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:13px;outline:none}
+.fi:focus{border-color:var(--blue)}
+.fta{width:100%;padding:7px 11px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:13px;outline:none;resize:vertical;min-height:70px}
+.fsel{width:100%;padding:7px 11px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:13px;outline:none}
+.m-acts{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.drop-zone{border:2px dashed var(--bd2);border-radius:var(--rl);padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:13px}
 .drop-zone:hover,.drop-zone.drag{border-color:var(--blue);background:rgba(31,111,235,.05)}
-.file-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.file-card{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r)}
-.file-ico{width:32px;height:32px;background:var(--redbg);border-radius:var(--r);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:14px;flex-shrink:0}
-.btn-analyse{padding:5px 12px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer}
-.btn-remove{padding:5px 8px;background:transparent;color:var(--tx3);border:1px solid var(--bd);border-radius:6px;font-size:11px;cursor:pointer}
-.analysis-box{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);padding:18px;margin-top:14px}
-.analysis-box h3{font-size:13px;font-weight:600;color:var(--blue2);margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.analysis-content{font-size:13px;color:var(--tx2);line-height:1.8;white-space:pre-wrap}
-.analysis-content strong{color:var(--tx)}
-/* CHAT */
-.chat-shell{display:flex;flex-direction:column;height:calc(100vh - 130px);background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden}
-.chat-top{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;flex-shrink:0}
-.chat-ava{width:32px;height:32px;background:var(--blue);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.chat-top-name{font-size:13px;font-weight:600}
-.chat-top-status{font-size:11px;color:var(--green)}
-.online-dot{width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:auto;box-shadow:0 0 5px var(--green)}
-.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
-.chat-messages::-webkit-scrollbar{width:3px}
-.chat-messages::-webkit-scrollbar-thumb{background:var(--bd2)}
-.msg{display:flex;gap:8px;max-width:88%}
-.msg.user{align-self:flex-end;flex-direction:row-reverse}
-.msg-ava{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;align-self:flex-end}
-.msg-ava.ai{background:var(--blue);color:#fff}
-.msg-ava.usr{background:var(--bg4);color:var(--tx2)}
-.bubble{padding:9px 13px;border-radius:12px;font-size:13px;line-height:1.6}
-.msg.ai .bubble{background:var(--bg3);color:var(--tx);border-radius:4px 12px 12px 12px}
-.msg.user .bubble{background:var(--blue);color:#fff;border-radius:12px 4px 12px 12px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px;border-top:1px solid var(--bd);flex-shrink:0}
-.chip{padding:4px 11px;border:1px solid var(--bd2);border-radius:20px;font-size:11px;color:var(--tx3);cursor:pointer;transition:all .15s;white-space:nowrap}
+.file-list{display:flex;flex-direction:column;gap:7px;margin-bottom:13px}
+.file-card{display:flex;align-items:center;gap:9px;padding:9px 13px;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r)}
+.file-ico{width:30px;height:30px;background:var(--redbg);border-radius:var(--r);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:13px;flex-shrink:0}
+.btn-an{padding:4px 11px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer}
+.btn-rm{padding:4px 8px;background:transparent;color:var(--tx3);border:1px solid var(--bd);border-radius:6px;font-size:11px;cursor:pointer}
+.analysis-box{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);padding:16px;margin-top:12px}
+.analysis-box h3{font-size:12px;font-weight:600;color:var(--blue2);margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.ac{font-size:13px;color:var(--tx2);line-height:1.8;white-space:pre-wrap}.ac strong{color:var(--tx)}
+.chat-shell{display:flex;flex-direction:column;height:calc(100vh - 128px);background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden}
+.chat-top{padding:11px 15px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.chat-ava{width:30px;height:30px;background:var(--blue);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.chat-name{font-size:13px;font-weight:600}.chat-status{font-size:10px;color:var(--green)}
+.odot{width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:auto;box-shadow:0 0 5px var(--green)}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:11px}
+.chat-msgs::-webkit-scrollbar{width:3px}.chat-msgs::-webkit-scrollbar-thumb{background:var(--bd2)}
+.msg{display:flex;gap:7px;max-width:88%}.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.mav{width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;align-self:flex-end}
+.mav.ai{background:var(--blue);color:#fff}.mav.usr{background:var(--bg4);color:var(--tx2)}
+.bubble{padding:8px 12px;border-radius:11px;font-size:13px;line-height:1.6}
+.msg.ai .bubble{background:var(--bg3);color:var(--tx);border-radius:4px 11px 11px 11px}
+.msg.user .bubble{background:var(--blue);color:#fff;border-radius:11px 4px 11px 11px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;padding:7px 14px;border-top:1px solid var(--bd);flex-shrink:0}
+.chip{padding:4px 10px;border:1px solid var(--bd2);border-radius:20px;font-size:11px;color:var(--tx3);cursor:pointer;transition:all .12s;white-space:nowrap}
 .chip:hover{border-color:var(--blue2);color:var(--blue2);background:var(--bluebg)}
-.chat-input-area{display:flex;gap:8px;padding:10px 16px;border-top:1px solid var(--bd);flex-shrink:0}
-.chat-input{flex:1;padding:8px 13px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:13px;outline:none;transition:border .15s}
-.chat-input:focus{border-color:var(--blue)}
-.send-btn{width:36px;height:36px;background:var(--blue);border:none;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
-.send-btn:hover{opacity:.85}
-.send-btn:disabled{opacity:.4;cursor:not-allowed}
+.chat-ia{display:flex;gap:7px;padding:9px 14px;border-top:1px solid var(--bd);flex-shrink:0}
+.chat-in{flex:1;padding:7px 12px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-size:13px;outline:none}
+.chat-in:focus{border-color:var(--blue)}
+.send-btn{width:34px;height:34px;background:var(--blue);border:none;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.send-btn:hover{opacity:.85}.send-btn:disabled{opacity:.4;cursor:not-allowed}
 .typing-dots{display:flex;gap:4px;align-items:center}
-.typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--tx3);animation:pulse 1.2s infinite}
-.typing-dots span:nth-child(2){animation-delay:.2s}
-.typing-dots span:nth-child(3){animation-delay:.4s}
+.typing-dots span{width:5px;height:5px;border-radius:50%;background:var(--tx3);animation:pulse 1.2s infinite}
+.typing-dots span:nth-child(2){animation-delay:.2s}.typing-dots span:nth-child(3){animation-delay:.4s}
 @keyframes pulse{0%,80%,100%{opacity:.2}40%{opacity:1}}
-/* AI RESULT BOX */
-.ai-result{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);padding:16px;margin-top:14px;font-size:13px;color:var(--tx2);line-height:1.8;white-space:pre-wrap}
-.ai-result strong{color:var(--tx)}
-.spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--bd2);border-top-color:var(--blue2);border-radius:50%;animation:spin .7s linear infinite}
+.ai-res{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rl);padding:14px;margin-top:12px;font-size:13px;color:var(--tx2);line-height:1.8;white-space:pre-wrap}
+.ai-res strong{color:var(--tx)}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid var(--bd2);border-top-color:var(--blue2);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.no-company{display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;color:var(--tx3);gap:12px;font-size:14px}
-.no-company i{font-size:40px;color:var(--bd2)}
-.provider-tag{font-size:10px;color:var(--tx3);margin-top:6px;text-align:right;font-style:italic}
+.no-co{display:flex;flex-direction:column;align-items:center;justify-content:center;height:260px;color:var(--tx3);gap:10px;font-size:13px}
+.no-co i{font-size:36px;color:var(--bd2)}
+.ptag{font-size:10px;color:var(--tx3);margin-top:5px;text-align:right;font-style:italic}
+.kpi-bar{height:6px;background:var(--bg4);border-radius:3px;overflow:hidden;margin-top:5px}
+.kpi-fill{height:6px;border-radius:3px;background:var(--blue);transition:width .5s}
+.deadline-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}
+.deadline-item:last-child{border-bottom:none}
+.dl-ico{width:32px;height:32px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.health-score{text-align:center;padding:20px 0}
+.health-num{font-size:56px;font-weight:700;line-height:1}
+.health-grade{font-size:22px;font-weight:600;margin-top:6px}
 </style>
 </head>
 <body>
 <div class="shell">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="logo-area">
-      <div class="logo-row">
-        <div class="logo-mark">📊</div>
-        <div><div class="logo-name">AI Accountant</div><div class="logo-sub">Sri Lanka CA Suite</div></div>
-      </div>
+<aside class="sidebar">
+  <div class="logo-area">
+    <div class="logo-row">
+      <div class="logo-mark">📊</div>
+      <div><div class="logo-name">AI Accountant</div><div class="logo-sub">Sri Lanka CA Suite</div></div>
     </div>
-    <div class="company-selector">
-      <label>Active Company</label>
-      <select class="company-select" id="globalCompanySelect" onchange="selectCompany(this.value)">
-        <option value="">— Select Company —</option>
-      </select>
+  </div>
+  <div class="co-sel">
+    <label>Active Company</label>
+    <select class="co-select" id="gcs" onchange="selectCompany(this.value)">
+      <option value="">— Select Company —</option>
+    </select>
+  </div>
+  <nav class="nav-block">
+    <div class="nav-lbl">Overview</div>
+    <div class="nav-item active" data-panel="companies"><i class="fa-solid fa-building"></i>Companies</div>
+    <div class="nav-item" data-panel="dashboard"><i class="fa-solid fa-gauge-high"></i>Dashboard</div>
+    <div class="nav-item" data-panel="upload"><i class="fa-solid fa-file-arrow-up"></i>Upload PDFs</div>
+    <div class="nav-item" data-panel="financialdata"><i class="fa-solid fa-table"></i>Financial Data</div>
+  </nav>
+  <nav class="nav-block">
+    <div class="nav-lbl">Analysis</div>
+    <div class="nav-item" data-panel="pl"><i class="fa-solid fa-file-invoice-dollar"></i>P&L Summary</div>
+    <div class="nav-item" data-panel="balance"><i class="fa-solid fa-scale-balanced"></i>Balance Sheet</div>
+    <div class="nav-item" data-panel="ratios"><i class="fa-solid fa-percent"></i>Ratios</div>
+    <div class="nav-item" data-panel="cashflow"><i class="fa-solid fa-arrows-rotate"></i>Cash Flow</div>
+    <div class="nav-item" data-panel="health"><i class="fa-solid fa-heart-pulse"></i>Health Score</div>
+    <div class="nav-item" data-panel="forecast"><i class="fa-solid fa-chart-line"></i>Forecast</div>
+  </nav>
+  <nav class="nav-block">
+    <div class="nav-lbl">CA Tools</div>
+    <div class="nav-item" data-panel="tax"><i class="fa-solid fa-receipt"></i>Tax Calculator</div>
+    <div class="nav-item" data-panel="payroll"><i class="fa-solid fa-users"></i>Payroll & EPF/ETF</div>
+    <div class="nav-item" data-panel="deadlines"><i class="fa-solid fa-calendar-check"></i>Deadlines</div>
+    <div class="nav-item" data-panel="audit"><i class="fa-solid fa-shield-halved"></i>Audit Flags</div>
+    <div class="nav-item" data-panel="kpi"><i class="fa-solid fa-target"></i>KPI Goals</div>
+    <div class="nav-item" data-panel="chat"><i class="fa-solid fa-robot"></i>AI Chatbot</div>
+  </nav>
+  <div class="sb-bottom">
+    <div style="display:flex;align-items:center;gap:7px;padding:5px 8px">
+      <div style="width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 4px var(--green)"></div>
+      <span style="font-size:10px;color:var(--tx3)">Groq + OpenRouter</span>
     </div>
-    <nav class="nav-block">
-      <div class="nav-label">Overview</div>
-      <div class="nav-item active" data-panel="companies"><i class="fa-solid fa-building"></i>Companies</div>
-      <div class="nav-item" data-panel="dashboard"><i class="fa-solid fa-gauge-high"></i>Dashboard</div>
-      <div class="nav-item" data-panel="upload"><i class="fa-solid fa-file-arrow-up"></i>Upload PDFs</div>
-      <div class="nav-item" data-panel="financialdata"><i class="fa-solid fa-table"></i>Financial Data</div>
-    </nav>
-    <nav class="nav-block">
-      <div class="nav-label">Analysis</div>
-      <div class="nav-item" data-panel="pl"><i class="fa-solid fa-file-invoice-dollar"></i>P&L Summary</div>
-      <div class="nav-item" data-panel="balance"><i class="fa-solid fa-scale-balanced"></i>Balance Sheet</div>
-      <div class="nav-item" data-panel="ratios"><i class="fa-solid fa-percent"></i>Ratios</div>
-      <div class="nav-item" data-panel="cashflow"><i class="fa-solid fa-arrows-rotate"></i>Cash Flow</div>
-    </nav>
-    <nav class="nav-block">
-      <div class="nav-label">Tools</div>
-      <div class="nav-item" data-panel="tax"><i class="fa-solid fa-receipt"></i>Tax Calculator</div>
-      <div class="nav-item" data-panel="audit"><i class="fa-solid fa-shield-halved"></i>Audit Flags</div>
-      <div class="nav-item" data-panel="chat"><i class="fa-solid fa-robot"></i>AI Chatbot</div>
-    </nav>
-    <div class="sidebar-bottom">
-      <div style="display:flex;align-items:center;gap:8px;padding:6px 10px">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green)"></div>
-        <span style="font-size:11px;color:var(--tx3)">Groq + OpenRouter</span>
-      </div>
-    </div>
-  </aside>
+  </div>
+</aside>
 
-  <!-- MAIN -->
-  <div class="main">
-    <div class="topbar">
-      <div>
-        <div class="page-heading" id="pageTitle">Companies</div>
-        <div class="page-sub" id="pageSub">Manage your client companies</div>
-      </div>
-      <div class="topbar-right">
-        <button class="btn-secondary" onclick="goPanel('chat')"><i class="fa-solid fa-robot"></i> Ask AI</button>
-        <button class="btn-primary" onclick="goPanel('upload')"><i class="fa-solid fa-upload"></i> Upload PDF</button>
-      </div>
+<div class="main">
+  <div class="topbar">
+    <div><div class="page-heading" id="pageTitle">Companies</div><div class="page-sub" id="pageSub">Manage your client companies</div></div>
+    <div class="tbr">
+      <button class="btn-s" onclick="goPanel('chat')"><i class="fa-solid fa-robot"></i> Ask AI</button>
+      <button class="btn-p" onclick="goPanel('upload')"><i class="fa-solid fa-upload"></i> Upload PDF</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- COMPANIES -->
+    <div class="panel active" id="panel-companies">
+      <div id="companyCards" class="co-cards"></div>
     </div>
 
-    <div class="content">
-
-      <!-- COMPANIES PANEL -->
-      <div class="panel active" id="panel-companies">
-        <div id="companyCards" class="company-cards"></div>
-        <div id="noCompanyMsg" style="display:none" class="card" style="text-align:center;color:var(--tx3)">
-          No companies yet. Add up to 3 companies.
+    <!-- DASHBOARD -->
+    <div class="panel" id="panel-dashboard">
+      <div id="dashNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="dashC" style="display:none">
+        <div class="stat-grid" id="dashStats"></div>
+        <div class="three-col">
+          <div class="card" style="cursor:pointer" onclick="goPanel('health')">
+            <div class="card-title"><i class="fa-solid fa-heart-pulse"></i>Health Score</div>
+            <div id="dashHealthPreview" style="font-size:13px;color:var(--tx3)">Click to calculate</div>
+          </div>
+          <div class="card" style="cursor:pointer" onclick="goPanel('deadlines')">
+            <div class="card-title"><i class="fa-solid fa-calendar-check"></i>Next Deadline</div>
+            <div id="dashDeadlinePreview" style="font-size:13px;color:var(--amber)">View deadlines →</div>
+          </div>
+          <div class="card" style="cursor:pointer" onclick="goPanel('kpi')">
+            <div class="card-title"><i class="fa-solid fa-target"></i>KPI Progress</div>
+            <div id="dashKpiPreview" style="font-size:13px;color:var(--tx3)">Set KPI goals →</div>
+          </div>
         </div>
-      </div>
-
-      <!-- DASHBOARD -->
-      <div class="panel" id="panel-dashboard">
-        <div id="dashNoCompany" class="no-company"><i class="fa-solid fa-building"></i>Select a company first</div>
-        <div id="dashContent" style="display:none">
-          <div class="stat-grid" id="dashStats"></div>
-          <div class="card">
-            <div class="card-title"><i class="fa-solid fa-robot"></i> AI Dashboard Insights</div>
-            <div id="dashInsight" style="font-size:13px;color:var(--tx3)">
-              <button class="btn-primary" onclick="runAnalysis('dashboard')" style="font-size:12px;padding:6px 14px"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate AI Insights</button>
-            </div>
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-robot"></i>AI Executive Insights</div>
+          <div id="dashInsight" style="font-size:13px;color:var(--tx3)">
+            <button class="btn-p" onclick="runAnalysis('dashboard')" style="font-size:12px;padding:6px 14px"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Insights</button>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- UPLOAD PDFs -->
-      <div class="panel" id="panel-upload">
-        <div id="uploadNoCompany" class="no-company"><i class="fa-solid fa-building"></i>Select a company first</div>
-        <div id="uploadContent" style="display:none">
-          <div class="two-col" style="margin-bottom:14px">
+    <!-- UPLOAD -->
+    <div class="panel" id="panel-upload">
+      <div id="uploadNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="uploadC" style="display:none">
+        <div class="two-col" style="margin-bottom:12px">
+          <div><label class="flbl">Document Type</label>
+            <select class="fsel" id="docTypeSelect">
+              <option>Balance Sheet</option><option>P&L Statement</option><option>Cash Flow Statement</option>
+              <option>Tax Return</option><option>Audit Report</option><option>Board Minutes</option><option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+          <i class="fa-solid fa-cloud-arrow-up" style="font-size:34px;color:var(--tx3);display:block;margin-bottom:9px"></i>
+          <div style="font-size:14px;font-weight:500;margin-bottom:3px">PDF drop කරන්න හෝ click කරන්න</div>
+          <div style="font-size:12px;color:var(--tx3)">Balance sheets · P&L · Tax returns · Audit reports</div>
+          <input type="file" id="fileInput" accept=".pdf" multiple style="display:none">
+        </div>
+        <div class="file-list" id="fileList"></div>
+        <div id="pdfResults"></div>
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-folder-open"></i>Uploaded Documents</div>
+          <div id="uploadedDocsList" style="font-size:13px;color:var(--tx3)">No documents yet.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINANCIAL DATA -->
+    <div class="panel" id="panel-financialdata">
+      <div id="fdNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="fdC" style="display:none">
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-table"></i>Current Year Financials</div>
+          <div class="two-col">
             <div>
-              <label class="form-label">Document Type</label>
-              <select class="form-select" id="docTypeSelect">
-                <option>Balance Sheet</option>
-                <option>P&L Statement</option>
-                <option>Cash Flow Statement</option>
-                <option>Tax Return</option>
-                <option>Audit Report</option>
-                <option>Other Financial Document</option>
-              </select>
+              <div class="fg"><label class="flbl">Revenue / Turnover (Rs.)</label><input class="fi" id="fd_revenue" placeholder="48,200,000"></div>
+              <div class="fg"><label class="flbl">Gross Profit (Rs.)</label><input class="fi" id="fd_gross_profit" placeholder="26,100,000"></div>
+              <div class="fg"><label class="flbl">Net Profit After Tax (Rs.)</label><input class="fi" id="fd_net_profit" placeholder="7,600,000"></div>
+              <div class="fg"><label class="flbl">Total Assets (Rs.)</label><input class="fi" id="fd_total_assets" placeholder="124,000,000"></div>
+            </div>
+            <div>
+              <div class="fg"><label class="flbl">Total Liabilities (Rs.)</label><input class="fi" id="fd_total_liabilities" placeholder="13,100,000"></div>
+              <div class="fg"><label class="flbl">Total Equity (Rs.)</label><input class="fi" id="fd_equity" placeholder="110,900,000"></div>
+              <div class="fg"><label class="flbl">Current Assets (Rs.)</label><input class="fi" id="fd_current_assets" placeholder="40,200,000"></div>
+              <div class="fg"><label class="flbl">Current Liabilities (Rs.)</label><input class="fi" id="fd_current_liabilities" placeholder="13,100,000"></div>
             </div>
           </div>
-          <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
-            <i class="fa-solid fa-cloud-arrow-up" style="font-size:36px;color:var(--tx3);display:block;margin-bottom:10px"></i>
-            <div style="font-size:14px;font-weight:500;margin-bottom:4px">PDF files drop කරන්න හෝ click කරන්න</div>
-            <div style="font-size:12px;color:var(--tx3)">Balance sheets · P&L · Tax returns · Audit reports</div>
-            <input type="file" id="fileInput" accept=".pdf" multiple style="display:none">
-          </div>
-          <div class="file-list" id="fileList"></div>
-          <div id="pdfResults"></div>
-          <div class="card" id="uploadedDocsCard">
-            <div class="card-title"><i class="fa-solid fa-folder-open"></i> Uploaded Documents</div>
-            <div id="uploadedDocsList" style="font-size:13px;color:var(--tx3)">No documents uploaded yet.</div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i>Previous Year (for comparison)</div>
+          <div class="two-col">
+            <div class="fg"><label class="flbl">Prev Revenue (Rs.)</label><input class="fi" id="fd_prev_revenue" placeholder="42,000,000"></div>
+            <div class="fg"><label class="flbl">Prev Net Profit (Rs.)</label><input class="fi" id="fd_prev_net_profit" placeholder="6,800,000"></div>
+            <div class="fg"><label class="flbl">Prev Total Assets (Rs.)</label><input class="fi" id="fd_prev_total_assets" placeholder="115,000,000"></div>
           </div>
         </div>
-      </div>
-
-      <!-- FINANCIAL DATA INPUT -->
-      <div class="panel" id="panel-financialdata">
-        <div id="fdNoCompany" class="no-company"><i class="fa-solid fa-building"></i>Select a company first</div>
-        <div id="fdContent" style="display:none">
-          <div class="card">
-            <div class="card-title"><i class="fa-solid fa-table"></i> Manual Financial Data Entry</div>
-            <p style="font-size:12px;color:var(--tx3);margin-bottom:14px">PDF analysis නැති හෝ missing data manually enter කරන්න. AI chatbot සහ analysis සියල්ල මේ data use කරනවා.</p>
-            <div class="two-col">
-              <div>
-                <div class="form-group"><label class="form-label">Revenue / Turnover (Rs.)</label><input class="form-input" id="fd_revenue" placeholder="e.g. 48,200,000"></div>
-                <div class="form-group"><label class="form-label">Gross Profit (Rs.)</label><input class="form-input" id="fd_gross_profit" placeholder="e.g. 26,100,000"></div>
-                <div class="form-group"><label class="form-label">Net Profit After Tax (Rs.)</label><input class="form-input" id="fd_net_profit" placeholder="e.g. 7,600,000"></div>
-                <div class="form-group"><label class="form-label">Total Assets (Rs.)</label><input class="form-input" id="fd_total_assets" placeholder="e.g. 124,000,000"></div>
-              </div>
-              <div>
-                <div class="form-group"><label class="form-label">Total Liabilities (Rs.)</label><input class="form-input" id="fd_total_liabilities" placeholder="e.g. 13,100,000"></div>
-                <div class="form-group"><label class="form-label">Total Equity (Rs.)</label><input class="form-input" id="fd_equity" placeholder="e.g. 110,900,000"></div>
-                <div class="form-group"><label class="form-label">Current Assets (Rs.)</label><input class="form-input" id="fd_current_assets" placeholder="e.g. 40,200,000"></div>
-                <div class="form-group"><label class="form-label">Current Liabilities (Rs.)</label><input class="form-input" id="fd_current_liabilities" placeholder="e.g. 13,100,000"></div>
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-users"></i>Payroll & Tax Info</div>
+          <div class="two-col">
+            <div>
+              <div class="fg"><label class="flbl">No. of Employees</label><input class="fi" id="fd_total_employees" placeholder="25"></div>
+              <div class="fg"><label class="flbl">Monthly Payroll (Rs.)</label><input class="fi" id="fd_monthly_payroll" placeholder="1,200,000"></div>
+              <div class="fg"><label class="flbl">EPF Employee Rate (%)</label><input class="fi" id="fd_epf_rate" placeholder="8" value="8"></div>
+            </div>
+            <div>
+              <div class="fg"><label class="flbl">ETF Employer Rate (%)</label><input class="fi" id="fd_etf_rate" placeholder="3" value="3"></div>
+              <div class="fg"><label class="flbl">Income Tax Rate (%)</label><input class="fi" id="fd_income_tax_rate" placeholder="30"></div>
+              <div class="fg"><label class="flbl">VAT Registered?</label>
+                <select class="fsel" id="fd_vat_registered"><option>Yes</option><option>No</option></select>
               </div>
             </div>
-            <div class="form-group"><label class="form-label">Additional Notes (any other info)</label><textarea class="form-textarea" id="fd_notes" placeholder="Financial year, special items, tax rates, dividend info..."></textarea></div>
-            <button class="btn-primary" onclick="saveFinancialData()"><i class="fa-solid fa-save"></i> Save Financial Data</button>
-            <span id="fdSaveMsg" style="font-size:12px;color:var(--green);margin-left:12px;display:none">✓ Saved!</span>
+          </div>
+          <div class="fg"><label class="flbl">Additional Notes</label><textarea class="fta" id="fd_notes" placeholder="Financial year details, special items, BOI status..."></textarea></div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <button class="btn-p" onclick="saveFD()"><i class="fa-solid fa-save"></i> Save All Data</button>
+            <span id="fdMsg" style="font-size:12px;color:var(--green);display:none">✓ Saved!</span>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- P&L -->
-      <div class="panel" id="panel-pl">
-        <div id="plNoCompany" class="no-company"><i class="fa-solid fa-building"></i>Select a company first</div>
-        <div id="plContent" style="display:none">
-          <div class="stat-grid" id="plStats"></div>
-          <div class="card">
-            <div class="card-title"><i class="fa-solid fa-robot"></i> AI P&L Analysis</div>
-            <button class="btn-primary" onclick="runAnalysis('pl')" style="font-size:12px;padding:6px 14px;margin-bottom:10px"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyse with AI</button>
-            <div id="plAnalysis" style="font-size:13px;color:var(--tx3)"></div>
-          </div>
+    <!-- P&L -->
+    <div class="panel" id="panel-pl">
+      <div id="plNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="plC" style="display:none">
+        <div class="stat-grid" id="plStats"></div>
+        <div class="card"><div class="card-title"><i class="fa-solid fa-robot"></i>AI P&L Analysis</div>
+          <button class="btn-p" onclick="runAnalysis('pl')" style="font-size:12px;padding:6px 14px;margin-bottom:9px"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyse</button>
+          <div id="plA" style="font-size:13px;color:var(--tx3)"></div>
         </div>
       </div>
+    </div>
 
-      <!-- BALANCE SHEET -->
-      <div class="panel" id="panel-balance">
-        <div id="balanceNoCompany" class="no-company"><i class="fa-solid fa-building"></i>Select a company first</div>
-        <div id="balanceContent" style="display:none">
-          <div class="stat-grid" id="balanceStats"></div>
-          <div class="card">
-            <div class="card-title"><i class="fa-solid fa-robot"></i> AI Balance Sheet Analysis</div>
-            <button class="btn-primary" onclick="runAnalysis('balance')" style="font-size:12px;padding:6px 14px;margin-bottom:10px"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyse with AI</button>
-            <div id="balanceAnalysis" style="font-size:13px;color:var(--tx3)"></div>
-          </div>
+    <!-- BALANCE -->
+    <div class="panel" id="panel-balance">
+      <div id="balNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="balC" style="display:none">
+        <div class="stat-grid" id="balStats"></div>
+        <div class="card"><div class="card-title"><i class="fa-solid fa-robot"></i>AI Balance Sheet Analysis</div>
+          <button class="btn-p" onclick="runAnalysis('balance')" style="font-size:12px;padding:6px 14px;margin-bottom:9px"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyse</button>
+          <div id="balA" style="font-size:13px;color:var(--tx3)"></div>
         </div>
       </div>
+    </div>
 
-      <!-- RATIOS -->
-      <div class="panel" id="panel-ratios">
-        <div id="ratiosNoCompany" class="no-company"><i class="fa-solid fa-building"></i>Select a company first</div>
-        <div id="ratiosContent" style="display:none">
-          <div id="ratioCards" class="two-col"></div>
-          <div class="card">
-            <div class="card-title"><i class="fa-solid fa-robot"></i> AI Ratio Commentary</div>
-            <button class="btn-primary" onclick="runAnalysis('ratios')" style="font-size:12px;padding:6px 14px;margin-bottom:10px"><i class="fa-solid fa-wand-magic-sparkles"></i> Get AI Commentary</button>
-            <div id="ratiosAnalysis" style="font-size:13px;color:var(--tx3)"></div>
-          </div>
+    <!-- RATIOS -->
+    <div class="panel" id="panel-ratios">
+      <div id="ratNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="ratC" style="display:none">
+        <div id="ratioCards" class="two-col" style="margin-bottom:13px"></div>
+        <div class="card"><div class="card-title"><i class="fa-solid fa-robot"></i>AI Ratio Commentary</div>
+          <button class="btn-p" onclick="runAnalysis('ratios')" style="font-size:12px;padding:6px 14px;margin-bottom:9px"><i class="fa-solid fa-wand-magic-sparkles"></i> Get Commentary</button>
+          <div id="ratA" style="font-size:13px;color:var(--tx3)"></div>
         </div>
       </div>
+    </div>
 
-      <!-- CASH FLOW -->
-      <div class="panel" id="panel-cashflow">
-        <div id="cashflowNoCompany" class="no-company"><i class="fa-solid fa-building"></i>Select a company first</div>
-        <div id="cashflowContent" style="display:none">
-          <div class="card">
-            <div class="card-title"><i class="fa-solid fa-robot"></i> AI Cash Flow Analysis</div>
-            <button class="btn-primary" onclick="runAnalysis('cashflow')" style="font-size:12px;padding:6px 14px;margin-bottom:10px"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyse with AI</button>
-            <div id="cashflowAnalysis" style="font-size:13px;color:var(--tx3)"></div>
-          </div>
+    <!-- CASHFLOW -->
+    <div class="panel" id="panel-cashflow">
+      <div id="cfNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="cfC" style="display:none">
+        <div class="card"><div class="card-title"><i class="fa-solid fa-robot"></i>AI Cash Flow Analysis</div>
+          <button class="btn-p" onclick="runAnalysis('cashflow')" style="font-size:12px;padding:6px 14px;margin-bottom:9px"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyse</button>
+          <div id="cfA" style="font-size:13px;color:var(--tx3)"></div>
         </div>
       </div>
+    </div>
 
-      <!-- TAX -->
-      <div class="panel" id="panel-tax">
+    <!-- HEALTH SCORE -->
+    <div class="panel" id="panel-health">
+      <div id="hsNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="hsC" style="display:none">
         <div class="two-col">
           <div class="card">
-            <div class="card-title"><i class="fa-solid fa-receipt"></i> Income Tax — Sri Lanka</div>
-            <div class="form-group"><label class="form-label">Taxable Income (Rs.)</label><input class="form-input" type="number" id="taxIncome" value="9400000" oninput="calcTax()"></div>
-            <div class="form-group"><label class="form-label">Company Type</label>
-              <select class="form-select" id="compType" onchange="calcTax()">
-                <option value="0.30">Standard Company — 30%</option>
-                <option value="0.24">SME (Turnover &lt; Rs. 500M) — 24%</option>
-                <option value="0.14">Export / BOI Company — 14%</option>
-                <option value="0.40">Banking / Finance — 40%</option>
-              </select>
+            <div class="card-title"><i class="fa-solid fa-heart-pulse"></i>Financial Health Score</div>
+            <div id="healthScoreDisplay" class="health-score">
+              <button class="btn-p" onclick="runAnalysis('health')" style="font-size:12px"><i class="fa-solid fa-calculator"></i> Calculate Score</button>
             </div>
-            <div class="card-title" style="margin-top:14px"><i class="fa-solid fa-percent"></i> VAT (18%)</div>
-            <div class="form-group"><label class="form-label">Taxable Turnover (Rs.)</label><input class="form-input" type="number" id="vatAmt" value="48200000" oninput="calcVAT()"></div>
-            <div class="form-group"><label class="form-label">Input VAT %</label><input class="form-input" type="number" id="inputVatPct" value="40" oninput="calcVAT()"></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fa-solid fa-list-check"></i>Score Breakdown</div>
+            <div id="healthBreakdown" style="font-size:13px;color:var(--tx3)">Calculate score first.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-robot"></i>AI Health Analysis</div>
+          <div id="hsA" style="font-size:13px;color:var(--tx3)"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORECAST -->
+    <div class="panel" id="panel-forecast">
+      <div id="fcNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="fcC" style="display:none">
+        <div class="card"><div class="card-title"><i class="fa-solid fa-chart-line"></i>AI Revenue & Profit Forecast</div>
+          <p style="font-size:12px;color:var(--tx3);margin-bottom:11px">Previous year data enter කළාම AI accurate forecast දෙනවා.</p>
+          <button class="btn-p" onclick="runAnalysis('forecast')" style="font-size:12px;padding:6px 14px;margin-bottom:9px"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Forecast</button>
+          <div id="fcA" style="font-size:13px;color:var(--tx3)"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAX -->
+    <div class="panel" id="panel-tax">
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-receipt"></i>Income Tax — Sri Lanka</div>
+          <div class="fg"><label class="flbl">Taxable Income (Rs.)</label><input class="fi" type="number" id="taxIncome" value="9400000" oninput="calcTax()"></div>
+          <div class="fg"><label class="flbl">Company Type</label>
+            <select class="fsel" id="compType" onchange="calcTax()">
+              <option value="0.30">Standard Company — 30%</option>
+              <option value="0.24">SME (Turnover &lt; Rs. 500M) — 24%</option>
+              <option value="0.14">Export / BOI — 14%</option>
+              <option value="0.40">Banking / Finance — 40%</option>
+            </select>
+          </div>
+          <div class="card-title" style="margin-top:13px"><i class="fa-solid fa-percent"></i>VAT Calculator (18%)</div>
+          <div class="fg"><label class="flbl">Taxable Turnover (Rs.)</label><input class="fi" type="number" id="vatAmt" value="48200000" oninput="calcVAT()"></div>
+          <div class="fg"><label class="flbl">Input VAT %</label><input class="fi" type="number" id="inputVatPct" value="40" oninput="calcVAT()"></div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:11px">
+            <div class="card-title"><i class="fa-solid fa-calculator"></i>Tax Result</div>
+            <div id="taxResult" style="font-size:13px;color:var(--tx2)"></div>
+          </div>
+          <div class="card" style="margin-bottom:11px">
+            <div class="card-title"><i class="fa-solid fa-percent"></i>VAT Result</div>
+            <div id="vatResult" style="font-size:13px;color:var(--tx2)"></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fa-solid fa-robot"></i>AI Tax Advice</div>
+            <button class="btn-p" onclick="runAnalysis('tax')" style="font-size:12px;padding:6px 14px"><i class="fa-solid fa-wand-magic-sparkles"></i> Get Tax Tips</button>
+            <div id="taxA" style="font-size:13px;color:var(--tx3);margin-top:9px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYROLL -->
+    <div class="panel" id="panel-payroll">
+      <div id="prNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="prC" style="display:none">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title"><i class="fa-solid fa-users"></i>EPF / ETF Calculator</div>
+            <div class="fg"><label class="flbl">Monthly Payroll (Rs.)</label><input class="fi" type="number" id="pr_payroll" oninput="calcPayroll()"></div>
+            <div class="fg"><label class="flbl">No. of Employees</label><input class="fi" type="number" id="pr_emp" oninput="calcPayroll()"></div>
+            <div class="fg"><label class="flbl">EPF Employee % (default 8)</label><input class="fi" type="number" id="pr_epf_e" value="8" oninput="calcPayroll()"></div>
+            <div class="fg"><label class="flbl">EPF Employer % (default 12)</label><input class="fi" type="number" id="pr_epf_er" value="12" oninput="calcPayroll()"></div>
+            <div class="fg"><label class="flbl">ETF Employer % (default 3)</label><input class="fi" type="number" id="pr_etf" value="3" oninput="calcPayroll()"></div>
           </div>
           <div>
-            <div class="card" style="margin-bottom:12px">
-              <div class="card-title"><i class="fa-solid fa-calculator"></i> Tax Result</div>
-              <div id="taxResult" style="font-size:13px;color:var(--tx2)"></div>
-            </div>
-            <div class="card" style="margin-bottom:12px">
-              <div class="card-title"><i class="fa-solid fa-percent"></i> VAT Result</div>
-              <div id="vatResult" style="font-size:13px;color:var(--tx2)"></div>
+            <div class="card" style="margin-bottom:11px">
+              <div class="card-title"><i class="fa-solid fa-calculator"></i>Payroll Obligations</div>
+              <div id="payrollResult" style="font-size:13px;color:var(--tx2)"></div>
             </div>
             <div class="card">
-              <div class="card-title"><i class="fa-solid fa-robot"></i> AI Tax Advice</div>
-              <button class="btn-primary" onclick="runAnalysis('tax')" style="font-size:12px;padding:6px 14px"><i class="fa-solid fa-wand-magic-sparkles"></i> Get AI Tax Tips</button>
-              <div id="taxAnalysis" style="font-size:13px;color:var(--tx3);margin-top:10px"></div>
+              <div class="card-title"><i class="fa-solid fa-calendar"></i>Filing Deadlines</div>
+              <div style="font-size:13px;color:var(--tx2);line-height:1.8">
+                <div><strong style="color:var(--tx)">EPF/ETF:</strong> 15th of following month</div>
+                <div><strong style="color:var(--tx)">PAYE:</strong> 15th of following month</div>
+                <div><strong style="color:var(--tx)">SSCL:</strong> Last day of following month</div>
+                <div style="margin-top:8px;font-size:11px;color:var(--red)">⚠ Late payments carry 5% penalty + 1.5% monthly interest (EPF Act)</div>
+              </div>
             </div>
           </div>
         </div>
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-robot"></i>AI Payroll Analysis</div>
+          <button class="btn-p" onclick="runAnalysis('payroll')" style="font-size:12px;padding:6px 14px;margin-bottom:9px"><i class="fa-solid fa-wand-magic-sparkles"></i> Full Payroll Analysis</button>
+          <div id="prA" style="font-size:13px;color:var(--tx3)"></div>
+        </div>
       </div>
+    </div>
 
-      <!-- AUDIT -->
-      <div class="panel" id="panel-audit">
-        <div id="auditNoCompany" class="no-company"><i class="fa-solid fa-building"></i>Select a company first</div>
-        <div id="auditContent" style="display:none">
+    <!-- DEADLINES -->
+    <div class="panel" id="panel-deadlines">
+      <div id="dlNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="dlC" style="display:none">
+        <div class="two-col">
           <div class="card">
-            <div class="card-title"><i class="fa-solid fa-robot"></i> AI Audit Analysis</div>
-            <button class="btn-primary" onclick="runAnalysis('audit')" style="font-size:12px;padding:6px 14px;margin-bottom:10px"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Audit Report</button>
-            <div id="auditAnalysis" style="font-size:13px;color:var(--tx3)"></div>
+            <div class="card-title"><i class="fa-solid fa-calendar-check"></i>Sri Lanka Statutory Deadlines</div>
+            <div id="deadlinesList">
+              <div class="deadline-item">
+                <div class="dl-ico" style="background:var(--redbg);color:var(--red)"><i class="fa-solid fa-file-invoice"></i></div>
+                <div><div style="font-size:13px;font-weight:500">VAT Return</div><div style="font-size:11px;color:var(--tx3)">Monthly — 30th of following month</div></div>
+                <span class="badge b-risk" style="margin-left:auto">Monthly</span>
+              </div>
+              <div class="deadline-item">
+                <div class="dl-ico" style="background:var(--amberbg);color:var(--amber)"><i class="fa-solid fa-users"></i></div>
+                <div><div style="font-size:13px;font-weight:500">EPF / ETF Payment</div><div style="font-size:11px;color:var(--tx3)">15th of following month</div></div>
+                <span class="badge b-warn" style="margin-left:auto">Monthly</span>
+              </div>
+              <div class="deadline-item">
+                <div class="dl-ico" style="background:var(--amberbg);color:var(--amber)"><i class="fa-solid fa-money-bill"></i></div>
+                <div><div style="font-size:13px;font-weight:500">PAYE Tax</div><div style="font-size:11px;color:var(--tx3)">15th of following month</div></div>
+                <span class="badge b-warn" style="margin-left:auto">Monthly</span>
+              </div>
+              <div class="deadline-item">
+                <div class="dl-ico" style="background:var(--bluebg);color:var(--blue2)"><i class="fa-solid fa-building-columns"></i></div>
+                <div><div style="font-size:13px;font-weight:500">Income Tax Return</div><div style="font-size:11px;color:var(--tx3)">30 Nov (companies), 30 Sep (individuals)</div></div>
+                <span class="badge b-info" style="margin-left:auto">Annual</span>
+              </div>
+              <div class="deadline-item">
+                <div class="dl-ico" style="background:var(--bluebg);color:var(--blue2)"><i class="fa-solid fa-file-contract"></i></div>
+                <div><div style="font-size:13px;font-weight:500">Companies Act Annual Return</div><div style="font-size:11px;color:var(--tx3)">Within 3 months of FY end</div></div>
+                <span class="badge b-info" style="margin-left:auto">Annual</span>
+              </div>
+              <div class="deadline-item">
+                <div class="dl-ico" style="background:var(--greenbg);color:var(--green)"><i class="fa-solid fa-percent"></i></div>
+                <div><div style="font-size:13px;font-weight:500">SSCL (Social Security)</div><div style="font-size:11px;color:var(--tx3)">Last day of following month. Rate: 2.5%</div></div>
+                <span class="badge b-ok" style="margin-left:auto">Monthly</span>
+              </div>
+              <div class="deadline-item">
+                <div class="dl-ico" style="background:var(--amberbg);color:var(--amber)"><i class="fa-solid fa-handshake"></i></div>
+                <div><div style="font-size:13px;font-weight:500">WHT Remittance</div><div style="font-size:11px;color:var(--tx3)">15th of following month</div></div>
+                <span class="badge b-warn" style="margin-left:auto">Monthly</span>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fa-solid fa-robot"></i>AI Deadline Analysis</div>
+            <button class="btn-p" onclick="runAnalysis('deadlines')" style="font-size:12px;padding:6px 14px;margin-bottom:9px"><i class="fa-solid fa-wand-magic-sparkles"></i> Company-Specific Deadlines</button>
+            <div id="dlA" style="font-size:13px;color:var(--tx3)"></div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- CHAT -->
-      <div class="panel" id="panel-chat">
-        <div id="chatNoCompany" class="no-company"><i class="fa-solid fa-building"></i>Select a company first</div>
-        <div id="chatContent" style="display:none">
-          <div class="chat-shell">
-            <div class="chat-top">
-              <div class="chat-ava">🤖</div>
-              <div>
-                <div class="chat-top-name">AI CA Assistant</div>
-                <div class="chat-top-status" id="chatCompanyName">● Company context loaded</div>
-              </div>
-              <button class="btn-danger" onclick="clearChat()" style="margin-left:auto;font-size:11px;padding:4px 10px"><i class="fa-solid fa-trash"></i> Clear</button>
-              <div class="online-dot" style="margin-left:8px"></div>
+    <!-- AUDIT -->
+    <div class="panel" id="panel-audit">
+      <div id="audNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="audC" style="display:none">
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-robot"></i>AI Audit Risk Analysis</div>
+          <button class="btn-p" onclick="runAnalysis('audit')" style="font-size:12px;padding:6px 14px;margin-bottom:9px"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Audit Report</button>
+          <div id="audA" style="font-size:13px;color:var(--tx3)"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI GOALS -->
+    <div class="panel" id="panel-kpi">
+      <div id="kpiNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="kpiC" style="display:none">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title"><i class="fa-solid fa-plus"></i>Add KPI Goal</div>
+            <div class="fg"><label class="flbl">KPI Name</label>
+              <select class="fsel" id="kpi_name">
+                <option>Revenue Growth</option><option>Net Profit Margin</option><option>Current Ratio</option>
+                <option>Debt/Equity Ratio</option><option>ROE</option><option>Debtor Days</option>
+                <option>Inventory Days</option><option>Employee Count</option><option>Custom Goal</option>
+              </select>
             </div>
-            <div class="chat-messages" id="chatMessages">
-              <div class="msg ai">
-                <div class="msg-ava ai"><i class="fa-solid fa-robot"></i></div>
-                <div class="bubble">ආයුබෝවන්! 🙏 Company select කරන්න. ඒ company ගේ PDFs, financial data සහ history සියල්ල මට access තියෙනවා. ඕනෑම financial question අහන්න!</div>
-              </div>
+            <div class="fg"><label class="flbl">Custom Name (if Custom)</label><input class="fi" id="kpi_custom" placeholder="e.g. Market Share %"></div>
+            <div class="two-col">
+              <div class="fg"><label class="flbl">Target Value</label><input class="fi" id="kpi_target" placeholder="e.g. 20"></div>
+              <div class="fg"><label class="flbl">Current Value</label><input class="fi" id="kpi_current" placeholder="e.g. 15"></div>
             </div>
-            <div class="chips" id="chipRow">
-              <div class="chip" onclick="useChip(this)">Current ratio කීයද?</div>
-              <div class="chip" onclick="useChip(this)">Profit margin analysis</div>
-              <div class="chip" onclick="useChip(this)">VAT compliance issues</div>
-              <div class="chip" onclick="useChip(this)">Audit risks explain කරන්න</div>
-              <div class="chip" onclick="useChip(this)">Top financial recommendations</div>
+            <div class="two-col">
+              <div class="fg"><label class="flbl">Unit</label><input class="fi" id="kpi_unit" placeholder="e.g. % or Rs.M"></div>
+              <div class="fg"><label class="flbl">Deadline</label><input class="fi" type="date" id="kpi_deadline"></div>
             </div>
-            <div class="chat-input-area">
-              <input class="chat-input" type="text" id="chatInput" placeholder="Company financial questions..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}">
-              <button class="send-btn" id="sendBtn" onclick="sendChat()"><i class="fa-solid fa-paper-plane"></i></button>
+            <button class="btn-p" onclick="addKPI()" style="font-size:12px;padding:6px 14px"><i class="fa-solid fa-plus"></i> Add KPI</button>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="fa-solid fa-target"></i>Current KPI Goals</div>
+            <div id="kpiList" style="font-size:13px;color:var(--tx3)">No KPIs yet.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="fa-solid fa-robot"></i>AI KPI Analysis</div>
+          <button class="btn-p" onclick="runAnalysis('kpi')" style="font-size:12px;padding:6px 14px;margin-bottom:9px"><i class="fa-solid fa-wand-magic-sparkles"></i> Analyse KPI Progress</button>
+          <div id="kpiA" style="font-size:13px;color:var(--tx3)"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHAT -->
+    <div class="panel" id="panel-chat">
+      <div id="chatNC" class="no-co"><i class="fa-solid fa-building"></i>Select a company first</div>
+      <div id="chatC" style="display:none">
+        <div class="chat-shell">
+          <div class="chat-top">
+            <div class="chat-ava">🤖</div>
+            <div><div class="chat-name">AI CA Assistant</div><div class="chat-status" id="chatCoName">● Ready</div></div>
+            <button class="btn-d" onclick="clearChat()" style="margin-left:auto;font-size:11px;padding:4px 9px"><i class="fa-solid fa-trash"></i></button>
+            <div class="odot" style="margin-left:7px"></div>
+          </div>
+          <div class="chat-msgs" id="chatMsgs">
+            <div class="msg ai">
+              <div class="mav ai"><i class="fa-solid fa-robot"></i></div>
+              <div class="bubble">ආයුබෝවන්! 🙏 Company select කරන්න. ඒ company ගේ PDFs, financial data, KPI goals, deadlines — සියල්ල context ලෙස ලැබෙනවා. ඕනෑ ප්‍රශ්නයක් Sinhala හෝ English ගහන්න!</div>
             </div>
+          </div>
+          <div class="chips" id="chipRow">
+            <div class="chip" onclick="useChip(this)">Current ratio කීයද?</div>
+            <div class="chip" onclick="useChip(this)">Next IRD deadline?</div>
+            <div class="chip" onclick="useChip(this)">EPF amount ගණනය කරන්න</div>
+            <div class="chip" onclick="useChip(this)">Profit margin analysis</div>
+            <div class="chip" onclick="useChip(this)">Tax saving tips</div>
+            <div class="chip" onclick="useChip(this)">Audit risks explain</div>
+          </div>
+          <div class="chat-ia">
+            <input class="chat-in" type="text" id="chatInput" placeholder="Financial question Sinhala හෝ English..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}">
+            <button class="send-btn" id="sendBtn" onclick="sendChat()"><i class="fa-solid fa-paper-plane"></i></button>
           </div>
         </div>
       </div>
+    </div>
 
-    </div><!-- /content -->
-  </div><!-- /main -->
-</div><!-- /shell -->
+  </div>
+</div>
+</div>
 
 <!-- ADD COMPANY MODAL -->
-<div class="modal-overlay" id="addCompanyModal">
+<div class="modal-ov" id="addCoModal">
   <div class="modal">
     <h3>Add New Company</h3>
-    <div class="form-group"><label class="form-label">Company Name *</label><input class="form-input" id="m_name" placeholder="ABC (Pvt) Ltd"></div>
+    <div class="fg"><label class="flbl">Company Name *</label><input class="fi" id="m_name" placeholder="ABC (Pvt) Ltd"></div>
     <div class="two-col">
-      <div class="form-group"><label class="form-label">Registration No</label><input class="form-input" id="m_reg" placeholder="PV 12345"></div>
-      <div class="form-group"><label class="form-label">Financial Year</label><input class="form-input" id="m_fy" placeholder="2024/25"></div>
+      <div class="fg"><label class="flbl">Registration No</label><input class="fi" id="m_reg" placeholder="PV 12345"></div>
+      <div class="fg"><label class="flbl">Financial Year</label><input class="fi" id="m_fy" placeholder="2024/25"></div>
     </div>
     <div class="two-col">
-      <div class="form-group"><label class="form-label">Company Type</label>
-        <select class="form-select" id="m_type">
-          <option>Private Limited</option><option>Public Limited</option><option>Sole Proprietorship</option><option>Partnership</option><option>NGO</option>
-        </select>
+      <div class="fg"><label class="flbl">Company Type</label>
+        <select class="fsel" id="m_type"><option>Private Limited</option><option>Public Limited</option><option>Sole Proprietorship</option><option>Partnership</option><option>NGO</option></select>
       </div>
-      <div class="form-group"><label class="form-label">Industry</label>
-        <select class="form-select" id="m_industry">
-          <option>Manufacturing</option><option>Trading</option><option>Services</option><option>Construction</option><option>IT</option><option>Finance</option><option>Healthcare</option><option>Agriculture</option><option>Other</option>
-        </select>
+      <div class="fg"><label class="flbl">Industry</label>
+        <select class="fsel" id="m_industry"><option>Manufacturing</option><option>Trading</option><option>Services</option><option>Construction</option><option>IT</option><option>Finance</option><option>Healthcare</option><option>Agriculture</option><option>Other</option></select>
       </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-      <button class="btn-primary" onclick="createCompany()"><i class="fa-solid fa-plus"></i> Add Company</button>
+    <div class="m-acts">
+      <button class="btn-s" onclick="closeModal()">Cancel</button>
+      <button class="btn-p" onclick="createCompany()"><i class="fa-solid fa-plus"></i> Add Company</button>
     </div>
   </div>
 </div>
 
 <script>
-const API = 'http://127.0.0.1:8000';
-let currentCompanyId = null;
-let currentCompanyData = null;
-const uploadedFiles = [];
+const API='http://127.0.0.1:8000';
+let cid=null, cdata=null;
+const uploadedFiles=[];
 
-const pageMeta = {
-  companies:['Companies','Manage your client companies'],
+const pageMeta={
+  companies:['Companies','Manage client companies'],
   dashboard:['Dashboard','Financial overview'],
-  upload:['Upload PDFs','Statements, returns, audit reports'],
-  financialdata:['Financial Data','Manual data entry'],
+  upload:['Upload PDFs','Statements & returns'],
+  financialdata:['Financial Data','Enter company financials'],
   pl:['P&L Summary','Profit & Loss analysis'],
   balance:['Balance Sheet','Assets, liabilities & equity'],
   ratios:['Financial Ratios','Liquidity, profitability, efficiency'],
-  cashflow:['Cash Flow','Operating, investing & financing'],
-  tax:['Tax Calculator','Sri Lanka income tax & VAT'],
-  audit:['Audit Flags','Risk assessment & compliance'],
-  chat:['AI Chatbot','Company-aware AI assistant']
+  cashflow:['Cash Flow','Liquidity & funding'],
+  health:['Health Score','Financial health rating'],
+  forecast:['Forecast','Revenue & profit forecast'],
+  tax:['Tax Calculator','Sri Lanka tax & VAT'],
+  payroll:['Payroll & EPF/ETF','Statutory payroll obligations'],
+  deadlines:['Deadlines','Sri Lanka filing deadlines'],
+  audit:['Audit Flags','Risk assessment'],
+  kpi:['KPI Goals','Track performance targets'],
+  chat:['AI Chatbot','Company-aware CA assistant']
 };
 
-// ─── NAVIGATION ───
-function goPanel(name) {
+const coSelPanels={
+  dashboard:['dashNC','dashC'],pl:['plNC','plC'],balance:['balNC','balC'],
+  ratios:['ratNC','ratC'],cashflow:['cfNC','cfC'],health:['hsNC','hsC'],
+  forecast:['fcNC','fcC'],payroll:['prNC','prC'],deadlines:['dlNC','dlC'],
+  audit:['audNC','audC'],kpi:['kpiNC','kpiC'],chat:['chatNC','chatC'],
+  upload:['uploadNC','uploadC'],financialdata:['fdNC','fdC']
+};
+
+function goPanel(name){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  const el = document.getElementById('panel-'+name);
+  const el=document.getElementById('panel-'+name);
   if(el) el.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n=>{if(n.dataset.panel===name)n.classList.add('active');});
-  const meta = pageMeta[name]||[name,''];
-  document.getElementById('pageTitle').textContent=meta[0];
-  document.getElementById('pageSub').textContent=meta[1];
-  if(name==='upload') refreshUploadedDocs();
-  if(name==='financialdata') loadFinancialDataForm();
-  if(name==='dashboard'||name==='pl'||name==='balance'||name==='ratios'||name==='cashflow'||name==='audit') {
-    showCompanyPanels(name);
-  }
-  if(name==='chat') loadChatHistory();
+  const m=pageMeta[name]||[name,''];
+  document.getElementById('pageTitle').textContent=m[0];
+  document.getElementById('pageSub').textContent=m[1];
+  showCoPanel(name);
+  if(name==='upload') refreshDocs();
+  if(name==='financialdata') loadFDForm();
+  if(name==='chat') loadChatHist();
+  if(name==='kpi') renderKPIs();
+  if(name==='payroll') prefillPayroll();
+  if(name==='dashboard'&&cdata) renderDashStats();
+  if(name==='ratios'&&cdata) renderRatios();
+  if(['pl','balance'].includes(name)&&cdata) renderSimpleStats(name);
 }
 
 document.querySelectorAll('.nav-item[data-panel]').forEach(el=>{
   el.addEventListener('click',()=>goPanel(el.dataset.panel));
 });
 
-function showCompanyPanels(name) {
-  const panels = {
-    dashboard:['dashNoCompany','dashContent'],
-    pl:['plNoCompany','plContent'],
-    balance:['balanceNoCompany','balanceContent'],
-    ratios:['ratiosNoCompany','ratiosContent'],
-    cashflow:['cashflowNoCompany','cashflowContent'],
-    audit:['auditNoCompany','auditContent'],
-    chat:['chatNoCompany','chatContent'],
-    upload:['uploadNoCompany','uploadContent'],
-    financialdata:['fdNoCompany','fdContent'],
-  };
-  const ids = panels[name];
+function showCoPanel(name){
+  const ids=coSelPanels[name];
   if(!ids) return;
-  if(currentCompanyId) {
+  if(cid){
     document.getElementById(ids[0]).style.display='none';
     document.getElementById(ids[1]).style.display='block';
-    if(name==='dashboard') renderDashStats();
-    if(name==='pl') renderPLStats();
-    if(name==='balance') renderBalanceStats();
-    if(name==='ratios') renderRatios();
   } else {
     document.getElementById(ids[0]).style.display='flex';
     document.getElementById(ids[1]).style.display='none';
   }
 }
 
-// ─── COMPANY MANAGEMENT ───
-async function loadCompanies() {
-  const res = await fetch(`${API}/api/companies`);
-  const companies = await res.json();
-  const sel = document.getElementById('globalCompanySelect');
-  const prevVal = sel.value;
-  sel.innerHTML = '<option value="">— Select Company —</option>';
-  companies.forEach(c=>{
-    sel.innerHTML += `<option value="${c.id}">${c.name}</option>`;
-  });
-  if(prevVal) sel.value=prevVal;
-  renderCompanyCards(companies);
+async function loadCompanies(){
+  const res=await fetch(`${API}/api/companies`);
+  const cos=await res.json();
+  const sel=document.getElementById('gcs');
+  const prev=sel.value;
+  sel.innerHTML='<option value="">— Select Company —</option>';
+  cos.forEach(c=>sel.innerHTML+=`<option value="${c.id}">${c.name}</option>`);
+  if(prev) sel.value=prev;
+  renderCoCards(cos);
 }
 
-function renderCompanyCards(companies) {
-  const container = document.getElementById('companyCards');
-  let html = '';
-  companies.forEach(c=>{
-    const isSelected = c.id==currentCompanyId;
-    html += `<div class="company-card ${isSelected?'selected':''}" onclick="selectCompany(${c.id})">
-      <button class="cc-del" onclick="event.stopPropagation();deleteCompany(${c.id})" title="Delete"><i class="fa-solid fa-trash"></i></button>
-      <div class="cc-name">${c.name}</div>
-      <div class="cc-sub">${c.company_type||''} ${c.industry?'· '+c.industry:''}</div>
-      <div class="cc-sub" style="margin-top:4px">${c.reg_no?'Reg: '+c.reg_no:''} ${c.financial_year?'· FY '+c.financial_year:''}</div>
+function renderCoCards(cos){
+  let html='';
+  cos.forEach(c=>{
+    html+=`<div class="co-card ${c.id==cid?'sel':''}" onclick="selectCompany(${c.id})">
+      <button class="co-del" onclick="event.stopPropagation();deleteCo(${c.id})"><i class="fa-solid fa-trash"></i></button>
+      <div class="co-name">${c.name}</div>
+      <div class="co-sub">${c.company_type||''} ${c.industry?'· '+c.industry:''}</div>
+      <div class="co-sub" style="margin-top:3px">${c.reg_no?'Reg: '+c.reg_no:''} ${c.financial_year?'· FY '+c.financial_year:''}</div>
     </div>`;
   });
-  if(companies.length < 3) {
-    html += `<div class="add-company-card" onclick="openAddCompany()"><i class="fa-solid fa-plus"></i> Add Company</div>`;
-  }
-  container.innerHTML = html;
+  if(cos.length<3) html+=`<div class="add-co" onclick="openModal()"><i class="fa-solid fa-plus"></i> Add Company</div>`;
+  document.getElementById('companyCards').innerHTML=html;
 }
 
-async function selectCompany(id) {
-  if(!id) { currentCompanyId=null; currentCompanyData=null; return; }
-  currentCompanyId = parseInt(id);
-  document.getElementById('globalCompanySelect').value = id;
-  const res = await fetch(`${API}/api/companies/${id}`);
-  currentCompanyData = await res.json();
+async function selectCompany(id){
+  if(!id){cid=null;cdata=null;return;}
+  cid=parseInt(id);
+  document.getElementById('gcs').value=id;
+  const res=await fetch(`${API}/api/companies/${id}`);
+  cdata=await res.json();
   await loadCompanies();
-  const activePanel = document.querySelector('.panel.active')?.id?.replace('panel-','');
-  if(activePanel) showCompanyPanels(activePanel);
-  if(document.getElementById('panel-chat').classList.contains('active')) loadChatHistory();
+  const ap=document.querySelector('.panel.active')?.id?.replace('panel-','');
+  if(ap){showCoPanel(ap);if(ap==='dashboard')renderDashStats();if(ap==='ratios')renderRatios();}
+  if(document.getElementById('panel-chat').classList.contains('active')) loadChatHist();
 }
 
-function openAddCompany() { document.getElementById('addCompanyModal').classList.add('open'); }
-function closeModal() { document.getElementById('addCompanyModal').classList.remove('open'); }
+function openModal(){document.getElementById('addCoModal').classList.add('open');}
+function closeModal(){document.getElementById('addCoModal').classList.remove('open');}
 
-async function createCompany() {
-  const name = document.getElementById('m_name').value.trim();
-  if(!name) { alert('Company name required!'); return; }
-  try {
-    const res = await fetch(`${API}/api/companies`, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        name, reg_no:document.getElementById('m_reg').value,
-        company_type:document.getElementById('m_type').value,
-        industry:document.getElementById('m_industry').value,
-        financial_year:document.getElementById('m_fy').value
-      })
-    });
-    const data = await res.json();
-    if(!res.ok) { alert(data.detail); return; }
-    closeModal();
-    document.getElementById('m_name').value='';
-    document.getElementById('m_reg').value='';
-    document.getElementById('m_fy').value='';
-    await loadCompanies();
-    selectCompany(data.id);
-  } catch(e) { alert('Error: '+e.message); }
+async function createCompany(){
+  const name=document.getElementById('m_name').value.trim();
+  if(!name){alert('Company name required!');return;}
+  const res=await fetch(`${API}/api/companies`,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name,reg_no:document.getElementById('m_reg').value,
+    company_type:document.getElementById('m_type').value,
+    industry:document.getElementById('m_industry').value,
+    financial_year:document.getElementById('m_fy').value})});
+  const d=await res.json();
+  if(!res.ok){alert(d.detail);return;}
+  closeModal();
+  ['m_name','m_reg','m_fy'].forEach(id=>document.getElementById(id).value='');
+  await loadCompanies();
+  selectCompany(d.id);
 }
 
-async function deleteCompany(id) {
-  if(!confirm('Delete this company and all its data?')) return;
-  await fetch(`${API}/api/companies/${id}`, {method:'DELETE'});
-  if(currentCompanyId===id) { currentCompanyId=null; currentCompanyData=null; }
+async function deleteCo(id){
+  if(!confirm('Delete company and all data?')) return;
+  await fetch(`${API}/api/companies/${id}`,{method:'DELETE'});
+  if(cid===id){cid=null;cdata=null;}
   await loadCompanies();
 }
 
-// ─── FINANCIAL DATA FORM ───
-function loadFinancialDataForm() {
-  showCompanyPanels('financialdata');
-  if(!currentCompanyData) return;
-  const d = currentCompanyData.financial_data||{};
-  ['revenue','gross_profit','net_profit','total_assets','total_liabilities','equity','current_assets','current_liabilities','notes'].forEach(k=>{
-    const el = document.getElementById('fd_'+k);
-    if(el) el.value = d[k]||'';
+// FINANCIAL DATA
+function loadFDForm(){
+  showCoPanel('financialdata');
+  if(!cdata) return;
+  const d=cdata.financial_data||{};
+  ['revenue','gross_profit','net_profit','total_assets','total_liabilities','equity',
+   'current_assets','current_liabilities','prev_revenue','prev_net_profit','prev_total_assets',
+   'epf_rate','etf_rate','total_employees','monthly_payroll','income_tax_rate','notes'].forEach(k=>{
+    const el=document.getElementById('fd_'+k);
+    if(el) el.value=d[k]||'';
   });
+  if(d.vat_registered) document.getElementById('fd_vat_registered').value=d.vat_registered;
 }
 
-async function saveFinancialData() {
-  if(!currentCompanyId) { alert('Select a company first!'); return; }
-  const body = {company_id:currentCompanyId};
-  ['revenue','gross_profit','net_profit','total_assets','total_liabilities','equity','current_assets','current_liabilities','notes'].forEach(k=>{
-    body[k] = document.getElementById('fd_'+k).value;
+async function saveFD(){
+  if(!cid){alert('Select a company!');return;}
+  const body={company_id:cid};
+  ['revenue','gross_profit','net_profit','total_assets','total_liabilities','equity',
+   'current_assets','current_liabilities','prev_revenue','prev_net_profit','prev_total_assets',
+   'epf_rate','etf_rate','total_employees','monthly_payroll','income_tax_rate','notes'].forEach(k=>{
+    body[k]=document.getElementById('fd_'+k).value;
   });
+  body.vat_registered=document.getElementById('fd_vat_registered').value;
   await fetch(`${API}/api/financial-data`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  const msg = document.getElementById('fdSaveMsg');
-  msg.style.display='inline';
-  setTimeout(()=>msg.style.display='none',2000);
-  const res = await fetch(`${API}/api/companies/${currentCompanyId}`);
-  currentCompanyData = await res.json();
+  const msg=document.getElementById('fdMsg');
+  msg.style.display='inline';setTimeout(()=>msg.style.display='none',2000);
+  const res=await fetch(`${API}/api/companies/${cid}`);
+  cdata=await res.json();
 }
 
-// ─── DASHBOARD STATS ───
-function renderDashStats() {
-  if(!currentCompanyData) return;
-  const d = currentCompanyData.financial_data||{};
-  const docs = currentCompanyData.documents||[];
-  document.getElementById('dashStats').innerHTML = `
-    <div class="stat-card"><div class="stat-lbl">Revenue</div><div class="stat-val" style="font-size:15px">${d.revenue||'—'}</div></div>
-    <div class="stat-card"><div class="stat-lbl">Net Profit</div><div class="stat-val" style="color:var(--green);font-size:15px">${d.net_profit||'—'}</div></div>
-    <div class="stat-card"><div class="stat-lbl">Total Assets</div><div class="stat-val" style="font-size:15px">${d.total_assets||'—'}</div></div>
-    <div class="stat-card"><div class="stat-lbl">Documents</div><div class="stat-val">${docs.length}</div></div>
-  `;
-}
+// DASHBOARD STATS
+function parseN(v){return parseFloat((v||'0').replace(/[^0-9.-]/g,''))||0;}
 
-function renderPLStats() {
-  if(!currentCompanyData) return;
-  const d = currentCompanyData.financial_data||{};
-  document.getElementById('plStats').innerHTML = `
-    <div class="stat-card"><div class="stat-lbl">Revenue</div><div class="stat-val" style="font-size:14px">${d.revenue||'—'}</div></div>
-    <div class="stat-card"><div class="stat-lbl">Gross Profit</div><div class="stat-val" style="font-size:14px">${d.gross_profit||'—'}</div></div>
-    <div class="stat-card"><div class="stat-lbl">Net Profit</div><div class="stat-val" style="color:var(--green);font-size:14px">${d.net_profit||'—'}</div></div>
-    <div class="stat-card"><div class="stat-lbl">Equity</div><div class="stat-val" style="font-size:14px">${d.equity||'—'}</div></div>
-  `;
-}
-
-function renderBalanceStats() {
-  if(!currentCompanyData) return;
-  const d = currentCompanyData.financial_data||{};
-  document.getElementById('balanceStats').innerHTML = `
+function renderDashStats(){
+  if(!cdata) return;
+  const d=cdata.financial_data||{};
+  const docs=cdata.documents||[];
+  const kpis=cdata.kpi_goals||[];
+  document.getElementById('dashStats').innerHTML=`
+    <div class="stat-card"><div class="stat-lbl">Revenue</div><div class="stat-val" style="font-size:14px;color:var(--green)">${d.revenue||'—'}</div></div>
+    <div class="stat-card"><div class="stat-lbl">Net Profit</div><div class="stat-val" style="font-size:14px;color:var(--green)">${d.net_profit||'—'}</div></div>
     <div class="stat-card"><div class="stat-lbl">Total Assets</div><div class="stat-val" style="font-size:14px">${d.total_assets||'—'}</div></div>
-    <div class="stat-card"><div class="stat-lbl">Total Liabilities</div><div class="stat-val" style="color:var(--red);font-size:14px">${d.total_liabilities||'—'}</div></div>
-    <div class="stat-card"><div class="stat-lbl">Equity</div><div class="stat-val" style="font-size:14px">${d.equity||'—'}</div></div>
-    <div class="stat-card"><div class="stat-lbl">Current Assets</div><div class="stat-val" style="font-size:14px">${d.current_assets||'—'}</div></div>
-  `;
+    <div class="stat-card"><div class="stat-lbl">Docs / KPIs</div><div class="stat-val">${docs.length} / ${kpis.length}</div></div>`;
+  document.getElementById('dashKpiPreview').innerHTML=kpis.length?`${kpis.length} goals set — view progress →`:'Set KPI goals →';
 }
 
-function renderRatios() {
-  if(!currentCompanyData) return;
-  const d = currentCompanyData.financial_data||{};
-  const parseNum = v => parseFloat((v||'0').replace(/[^0-9.]/g,''))||0;
-  const rev=parseNum(d.revenue), gp=parseNum(d.gross_profit), np=parseNum(d.net_profit);
-  const ca=parseNum(d.current_assets), cl=parseNum(d.current_liabilities);
-  const ta=parseNum(d.total_assets), eq=parseNum(d.equity), tl=parseNum(d.total_liabilities);
-  const currentRatio = cl>0?(ca/cl).toFixed(2):'—';
-  const grossMargin  = rev>0?((gp/rev)*100).toFixed(1)+'%':'—';
-  const netMargin    = rev>0?((np/rev)*100).toFixed(1)+'%':'—';
-  const roe          = eq>0?((np/eq)*100).toFixed(1)+'%':'—';
-  const roa          = ta>0?((np/ta)*100).toFixed(1)+'%':'—';
-  const de           = eq>0?(tl/eq).toFixed(2):'—';
-  document.getElementById('ratioCards').innerHTML = `
+function renderSimpleStats(name){
+  if(!cdata) return;
+  const d=cdata.financial_data||{};
+  const statsEl=document.getElementById(name==='pl'?'plStats':'balStats');
+  if(name==='pl'){
+    statsEl.innerHTML=`
+      <div class="stat-card"><div class="stat-lbl">Revenue</div><div class="stat-val" style="font-size:13px">${d.revenue||'—'}</div></div>
+      <div class="stat-card"><div class="stat-lbl">Gross Profit</div><div class="stat-val" style="font-size:13px">${d.gross_profit||'—'}</div></div>
+      <div class="stat-card"><div class="stat-lbl">Net Profit</div><div class="stat-val" style="font-size:13px;color:var(--green)">${d.net_profit||'—'}</div></div>
+      <div class="stat-card"><div class="stat-lbl">Equity</div><div class="stat-val" style="font-size:13px">${d.equity||'—'}</div></div>`;
+  } else {
+    statsEl.innerHTML=`
+      <div class="stat-card"><div class="stat-lbl">Total Assets</div><div class="stat-val" style="font-size:13px">${d.total_assets||'—'}</div></div>
+      <div class="stat-card"><div class="stat-lbl">Total Liabilities</div><div class="stat-val" style="font-size:13px;color:var(--red)">${d.total_liabilities||'—'}</div></div>
+      <div class="stat-card"><div class="stat-lbl">Equity</div><div class="stat-val" style="font-size:13px">${d.equity||'—'}</div></div>
+      <div class="stat-card"><div class="stat-lbl">Current Assets</div><div class="stat-val" style="font-size:13px">${d.current_assets||'—'}</div></div>`;
+  }
+}
+
+function renderRatios(){
+  if(!cdata) return;
+  const d=cdata.financial_data||{};
+  const rev=parseN(d.revenue),gp=parseN(d.gross_profit),np=parseN(d.net_profit);
+  const ca=parseN(d.current_assets),cl=parseN(d.current_liabilities);
+  const ta=parseN(d.total_assets),eq=parseN(d.equity),tl=parseN(d.total_liabilities);
+  const cr=cl>0?(ca/cl).toFixed(2):'—';
+  const gm=rev>0?((gp/rev)*100).toFixed(1)+'%':'—';
+  const nm=rev>0?((np/rev)*100).toFixed(1)+'%':'—';
+  const roe=eq>0?((np/eq)*100).toFixed(1)+'%':'—';
+  const roa=ta>0?((np/ta)*100).toFixed(1)+'%':'—';
+  const de=eq>0?(tl/eq).toFixed(2):'—';
+  document.getElementById('ratioCards').innerHTML=`
     <div class="card">
-      <div class="card-title"><i class="fa-solid fa-droplet"></i> Liquidity</div>
-      <div class="row-item"><span class="row-label">Current Ratio</span><span class="row-val">${currentRatio}</span></div>
+      <div class="card-title"><i class="fa-solid fa-droplet"></i>Liquidity</div>
+      <div class="row-item"><span class="row-label">Current Ratio</span><span class="row-val">${cr} ${cr!=='—'?(parseFloat(cr)>=2?'<span class="badge b-ok">Good</span>':parseFloat(cr)>=1?'<span class="badge b-warn">OK</span>':'<span class="badge b-risk">Low</span>'):''}</span></div>
     </div>
     <div class="card">
-      <div class="card-title"><i class="fa-solid fa-arrow-trend-up"></i> Profitability</div>
-      <div class="row-item"><span class="row-label">Gross Margin</span><span class="row-val">${grossMargin}</span></div>
-      <div class="row-item"><span class="row-label">Net Margin</span><span class="row-val">${netMargin}</span></div>
+      <div class="card-title"><i class="fa-solid fa-arrow-trend-up"></i>Profitability</div>
+      <div class="row-item"><span class="row-label">Gross Margin</span><span class="row-val">${gm}</span></div>
+      <div class="row-item"><span class="row-label">Net Margin</span><span class="row-val">${nm}</span></div>
       <div class="row-item"><span class="row-label">ROE</span><span class="row-val">${roe}</span></div>
       <div class="row-item"><span class="row-label">ROA</span><span class="row-val">${roa}</span></div>
-      <div class="row-item"><span class="row-label">Debt / Equity</span><span class="row-val">${de}</span></div>
-    </div>
-  `;
+      <div class="row-item"><span class="row-label">Debt/Equity</span><span class="row-val">${de}</span></div>
+    </div>`;
 }
 
-// ─── PDF UPLOAD ───
+// PDF UPLOAD
 document.getElementById('fileInput').addEventListener('change',e=>{[...e.target.files].forEach(addFile);e.target.value='';});
 const dz=document.getElementById('dropZone');
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag');});
 dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
 dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag');[...e.dataTransfer.files].filter(f=>f.type==='application/pdf').forEach(addFile);});
 
-function addFile(file) {
+function addFile(file){
   const id='f'+Date.now()+Math.random();
   uploadedFiles.push({id,file,b64:null});
   renderFileList();
@@ -705,184 +867,263 @@ function addFile(file) {
   reader.readAsDataURL(file);
 }
 
-function renderFileList() {
+function renderFileList(){
   document.getElementById('fileList').innerHTML=uploadedFiles.map(f=>`
-    <div class="file-card" id="fc-${f.id}">
+    <div class="file-card">
       <div class="file-ico"><i class="fa-solid fa-file-pdf"></i></div>
-      <div style="flex:1;font-size:13px;font-weight:500">${f.file.name}</div>
-      <span style="font-size:11px;color:var(--tx3)">${(f.file.size/1024/1024).toFixed(1)} MB</span>
+      <div style="flex:1;font-size:12px;font-weight:500">${f.file.name}</div>
+      <span style="font-size:10px;color:var(--tx3)">${(f.file.size/1024/1024).toFixed(1)}MB</span>
       <span id="status-${f.id}"><span class="badge b-info">Reading...</span></span>
-      <button class="btn-analyse" id="btn-${f.id}" onclick="analyseFile('${f.id}')" disabled>Analyse</button>
-      <button class="btn-remove" onclick="removeFile('${f.id}')">✕</button>
+      <button class="btn-an" id="btn-${f.id}" onclick="analyseFile('${f.id}')" disabled>Analyse</button>
+      <button class="btn-rm" onclick="removeFile('${f.id}')">✕</button>
     </div>`).join('');
 }
 
-function removeFile(id) {
+function removeFile(id){
   const i=uploadedFiles.findIndex(x=>x.id===id);
   if(i>-1) uploadedFiles.splice(i,1);
   renderFileList();
 }
 
-async function analyseFile(id) {
-  if(!currentCompanyId){alert('Select a company first!');return;}
+async function analyseFile(id){
+  if(!cid){alert('Select a company first!');return;}
   const f=uploadedFiles.find(x=>x.id===id);
-  if(!f||!f.b64){alert('PDF still loading, please wait.');return;}
+  if(!f?.b64){alert('PDF loading — please wait.');return;}
   const btn=document.getElementById('btn-'+id);
   btn.textContent='Analysing...';btn.disabled=true;
   const docType=document.getElementById('docTypeSelect').value;
-  const resultsEl=document.getElementById('pdfResults');
-  resultsEl.innerHTML=`<div class="analysis-box"><h3><span class="spinner"></span> Analysing: ${f.file.name}</h3><div class="analysis-content" id="pdfResult-${id}">AI analysing with company context...</div></div>`;
-  try {
-    const res=await fetch(`${API}/api/analyze-pdf`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({company_id:currentCompanyId,filename:f.file.name,doc_type:docType,b64data:f.b64})
-    });
-    const data=await res.json();
-    const el=document.getElementById(`pdfResult-${id}`);
-    if(el) el.innerHTML=formatText(data.reply);
+  const res2=document.getElementById('pdfResults');
+  res2.innerHTML=`<div class="analysis-box"><h3><span class="spin"></span> Analysing: ${f.file.name}</h3><div class="ac" id="pr-${id}">AI analysing with company context...</div></div>`;
+  try{
+    const res=await fetch(`${API}/api/analyze-pdf`,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({company_id:cid,filename:f.file.name,doc_type:docType,b64data:f.b64})});
+    const d=await res.json();
+    const el=document.getElementById(`pr-${id}`);
+    if(el) el.innerHTML=fmt(d.reply);
     const box=el?.closest('.analysis-box');
-    if(box) box.querySelector('h3').innerHTML=`<i class="fa-solid fa-check-circle" style="color:var(--green)"></i> Done: ${f.file.name} <span style="font-size:10px;color:var(--tx3);font-weight:400">(${data.provider})</span>`;
+    if(box) box.querySelector('h3').innerHTML=`<i class="fa-solid fa-check-circle" style="color:var(--green)"></i> Done: ${f.file.name} <span style="font-size:10px;color:var(--tx3)">(${d.provider})</span>`;
     btn.textContent='Re-analyse';btn.disabled=false;
-    const cdRes=await fetch(`${API}/api/companies/${currentCompanyId}`);
-    currentCompanyData=await cdRes.json();
-    refreshUploadedDocs();
-  } catch(e) {
-    const el=document.getElementById(`pdfResult-${id}`);
+    const r=await fetch(`${API}/api/companies/${cid}`);cdata=await r.json();
+    refreshDocs();
+  }catch(e){
+    const el=document.getElementById(`pr-${id}`);
     if(el) el.textContent='Error: '+e.message;
     btn.textContent='Retry';btn.disabled=false;
   }
 }
 
-function refreshUploadedDocs() {
-  if(!currentCompanyData) return;
-  const docs=currentCompanyData.documents||[];
+function refreshDocs(){
+  if(!cdata) return;
+  const docs=cdata.documents||[];
   const el=document.getElementById('uploadedDocsList');
-  if(!docs.length){el.innerHTML='<span style="color:var(--tx3)">No documents uploaded yet.</span>';return;}
-  el.innerHTML=docs.map(d=>`
+  el.innerHTML=docs.length?docs.map(d=>`
     <div class="row-item">
-      <span style="font-size:13px"><i class="fa-solid fa-file-pdf" style="color:var(--red);margin-right:6px"></i>${d.filename}</span>
+      <span><i class="fa-solid fa-file-pdf" style="color:var(--red);margin-right:6px"></i>${d.filename}</span>
       <span class="badge b-info">${d.doc_type}</span>
-      <span style="font-size:11px;color:var(--tx3)">${d.uploaded_at?.split('T')[0]||''}</span>
-    </div>`).join('');
+      <span style="font-size:10px;color:var(--tx3)">${(d.uploaded_at||'').split('T')[0]}</span>
+    </div>`).join(''):'<span style="color:var(--tx3)">No documents yet.</span>';
 }
 
-// ─── AI ANALYSIS ───
-async function runAnalysis(type) {
-  if(!currentCompanyId){alert('Select a company first!');return;}
-  const elMap={
-    dashboard:'dashInsight',pl:'plAnalysis',balance:'balanceAnalysis',
-    ratios:'ratiosAnalysis',cashflow:'cashflowAnalysis',audit:'auditAnalysis',tax:'taxAnalysis'
-  };
+// AI ANALYSIS
+const elMap={dashboard:'dashInsight',pl:'plA',balance:'balA',ratios:'ratA',cashflow:'cfA',
+  health:'hsA',forecast:'fcA',tax:'taxA',payroll:'prA',deadlines:'dlA',audit:'audA',kpi:'kpiA'};
+
+async function runAnalysis(type){
+  if(!cid&&!['tax'].includes(type)){alert('Select a company first!');return;}
   const el=document.getElementById(elMap[type]);
   if(!el) return;
-  el.innerHTML='<span class="spinner"></span> AI analysing...';
-  try {
-    const res=await fetch(`${API}/api/analyse`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({company_id:currentCompanyId,analysis_type:type})
-    });
-    const data=await res.json();
-    el.innerHTML=`<div class="ai-result">${formatText(data.reply)}</div><div class="provider-tag">Analysed by: ${data.provider}</div>`;
-  } catch(e) {
-    el.innerHTML=`<span style="color:var(--red)">Error: ${e.message}</span>`;
-  }
+  el.innerHTML='<span class="spin"></span> AI analysing...';
+  try{
+    const res=await fetch(`${API}/api/analyse`,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({company_id:cid||0,analysis_type:type})});
+    const d=await res.json();
+    el.innerHTML=`<div class="ai-res">${fmt(d.reply)}</div><div class="ptag">${d.provider}</div>`;
+    if(type==='health') parseHealthScore(d.reply);
+  }catch(e){el.innerHTML=`<span style="color:var(--red)">Error: ${e.message}</span>`;}
 }
 
-// ─── CHATBOT ───
-async function loadChatHistory() {
-  showCompanyPanels('chat');
-  if(!currentCompanyId) return;
-  const comp=currentCompanyData?.company;
-  if(comp) document.getElementById('chatCompanyName').textContent=`● ${comp.name} — context loaded`;
-  try {
-    const res=await fetch(`${API}/api/chat/${currentCompanyId}/history`);
-    const history=await res.json();
-    const msgs=document.getElementById('chatMessages');
-    if(history.length===0){
-      msgs.innerHTML=`<div class="msg ai"><div class="msg-ava ai"><i class="fa-solid fa-robot"></i></div><div class="bubble">ආයුබෝවන්! ${comp?.name||'Company'} ගේ data load කරලා ready. ඔයාගේ financial questions අහන්න! 🎯</div></div>`;
-    } else {
-      msgs.innerHTML=history.map(m=>`
-        <div class="msg ${m.role==='user'?'user':'ai'}">
-          <div class="msg-ava ${m.role==='user'?'usr':'ai'}"><i class="fa-solid fa-${m.role==='user'?'user':'robot'}"></i></div>
-          <div class="bubble">${formatText(m.message)}</div>
-        </div>`).join('');
-    }
-    msgs.scrollTop=msgs.scrollHeight;
-  } catch(e){}
+function parseHealthScore(text){
+  const match=text.match(/(\d{2,3})\s*\/\s*100|score[:\s]+(\d{2,3})/i);
+  const score=match?(parseInt(match[1]||match[2])):null;
+  if(!score) return;
+  const grade=score>=80?'A':score>=65?'B':score>=50?'C':score>=35?'D':'F';
+  const color=score>=80?'var(--green)':score>=65?'var(--blue2)':score>=50?'var(--amber)':'var(--red)';
+  document.getElementById('healthScoreDisplay').innerHTML=`
+    <div class="health-score">
+      <div class="health-num" style="color:${color}">${score}</div>
+      <div style="font-size:13px;color:var(--tx3);margin-top:4px">out of 100</div>
+      <div class="health-grade" style="color:${color}">Grade ${grade}</div>
+    </div>`;
 }
 
-async function clearChat() {
-  if(!currentCompanyId||!confirm('Chat history clear කරන්නද?')) return;
-  await fetch(`${API}/api/chat/${currentCompanyId}`,{method:'DELETE'});
-  loadChatHistory();
+// PAYROLL CALCULATOR
+function prefillPayroll(){
+  if(!cdata?.financial_data) return;
+  const d=cdata.financial_data;
+  if(d.monthly_payroll) document.getElementById('pr_payroll').value=d.monthly_payroll.replace(/[^0-9]/g,'');
+  if(d.total_employees) document.getElementById('pr_emp').value=d.total_employees;
+  if(d.epf_rate) document.getElementById('pr_epf_e').value=d.epf_rate;
+  if(d.etf_rate) document.getElementById('pr_etf').value=d.etf_rate;
+  calcPayroll();
 }
 
-function useChip(el){document.getElementById('chatInput').value=el.textContent;sendChat();}
-
-async function sendChat() {
-  if(!currentCompanyId){alert('Select a company first!');return;}
-  const input=document.getElementById('chatInput');
-  const text=input.value.trim();
-  if(!text) return;
-  const msgs=document.getElementById('chatMessages');
-  const btn=document.getElementById('sendBtn');
-  input.value='';btn.disabled=true;
-  msgs.innerHTML+=`<div class="msg user"><div class="msg-ava usr"><i class="fa-solid fa-user"></i></div><div class="bubble">${text}</div></div>`;
-  const typId='t'+Date.now();
-  msgs.innerHTML+=`<div class="msg ai" id="${typId}"><div class="msg-ava ai"><i class="fa-solid fa-robot"></i></div><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
-  msgs.scrollTop=msgs.scrollHeight;
-  try {
-    const res=await fetch(`${API}/api/chat`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({company_id:currentCompanyId,message:text})
-    });
-    const data=await res.json();
-    const el=document.getElementById(typId);
-    if(el) el.querySelector('.bubble').innerHTML=formatText(data.reply);
-    msgs.scrollTop=msgs.scrollHeight;
-    document.getElementById('chipRow').style.display='none';
-  } catch(e) {
-    const el=document.getElementById(typId);
-    if(el) el.querySelector('.bubble').textContent='Error: '+e.message;
-  }
-  btn.disabled=false;
-  input.focus();
+function calcPayroll(){
+  const pay=parseFloat(document.getElementById('pr_payroll').value)||0;
+  const emp=parseInt(document.getElementById('pr_emp').value)||1;
+  const epfe=(parseFloat(document.getElementById('pr_epf_e').value)||8)/100;
+  const epfer=(parseFloat(document.getElementById('pr_epf_er').value)||12)/100;
+  const etf=(parseFloat(document.getElementById('pr_etf').value)||3)/100;
+  const epf_emp=pay*epfe,epf_er=pay*epfer,etf_amt=pay*etf;
+  const total_epf=epf_emp+epf_er,sscl=pay*0.025,cost=pay+epf_er+etf_amt+sscl;
+  document.getElementById('payrollResult').innerHTML=`
+    <div class="row-item"><span class="row-label">Gross Payroll</span><span class="row-val">${fmtR(pay)}</span></div>
+    <div class="row-item"><span class="row-label">EPF — Employee (${(epfe*100).toFixed(0)}%)</span><span class="row-val" style="color:var(--amber)">${fmtR(epf_emp)}</span></div>
+    <div class="row-item"><span class="row-label">EPF — Employer (${(epfer*100).toFixed(0)}%)</span><span class="row-val" style="color:var(--amber)">${fmtR(epf_er)}</span></div>
+    <div class="row-item"><span class="row-label">ETF — Employer (${(etf*100).toFixed(0)}%)</span><span class="row-val" style="color:var(--amber)">${fmtR(etf_amt)}</span></div>
+    <div class="row-item"><span class="row-label">SSCL (2.5%)</span><span class="row-val">${fmtR(sscl)}</span></div>
+    <div class="row-item" style="background:var(--redbg);padding:6px;border-radius:6px">
+      <span class="row-label" style="font-weight:600;color:var(--red)">Total Cost to Company</span>
+      <span class="row-val" style="color:var(--red)">${fmtR(cost)}</span>
+    </div>
+    <div style="margin-top:8px;font-size:11px;color:var(--tx3)">EPF Fund Total: ${fmtR(total_epf)} | Per employee avg: ${fmtR(pay/emp)}</div>`;
 }
 
-// ─── TAX CALCULATOR ───
-function fmt(n){return'Rs. '+Math.round(n).toLocaleString();}
+// KPI
+async function addKPI(){
+  if(!cid){alert('Select a company!');return;}
+  const sel=document.getElementById('kpi_name').value;
+  const name=sel==='Custom Goal'?document.getElementById('kpi_custom').value:sel;
+  if(!name){alert('Enter KPI name!');return;}
+  await fetch(`${API}/api/kpi`,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({company_id:cid,kpi_name:name,
+      target_value:document.getElementById('kpi_target').value,
+      current_value:document.getElementById('kpi_current').value,
+      unit:document.getElementById('kpi_unit').value,
+      deadline:document.getElementById('kpi_deadline').value})});
+  const res=await fetch(`${API}/api/companies/${cid}`);cdata=await res.json();
+  renderKPIs();
+}
+
+function renderKPIs(){
+  if(!cdata) return;
+  const kpis=cdata.kpi_goals||[];
+  if(!kpis.length){document.getElementById('kpiList').innerHTML='<span style="color:var(--tx3)">No KPIs yet.</span>';return;}
+  document.getElementById('kpiList').innerHTML=kpis.map(k=>{
+    const t=parseFloat(k.target_value)||1,cv=parseFloat(k.current_value)||0;
+    const pct=Math.min(100,Math.round((cv/t)*100));
+    const color=pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
+    return `<div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+        <span style="font-size:12px;font-weight:500">${k.kpi_name}</span>
+        <span style="font-size:11px;color:var(--tx3)">${k.current_value}${k.unit} / ${k.target_value}${k.unit}</span>
+      </div>
+      <div class="kpi-bar"><div class="kpi-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:2px">
+        <span style="font-size:10px;color:var(--tx3)">${pct}% complete</span>
+        <span style="font-size:10px;color:var(--tx3)">${k.deadline||''} 
+          <button onclick="deleteKPI(${k.id})" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:10px;margin-left:4px">✕</button>
+        </span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function deleteKPI(kid){
+  await fetch(`${API}/api/kpi/${kid}`,{method:'DELETE'});
+  const res=await fetch(`${API}/api/companies/${cid}`);cdata=await res.json();
+  renderKPIs();
+}
+
+// TAX CALCULATOR
+function fmtR(n){return'Rs. '+Math.round(n).toLocaleString();}
 function calcTax(){
   const inc=parseFloat(document.getElementById('taxIncome').value)||0;
   const rate=parseFloat(document.getElementById('compType').value)||0.3;
   const gross=inc*rate,pay=gross*0.638;
   document.getElementById('taxResult').innerHTML=`
-    <div class="row-item"><span class="row-label">Taxable Income</span><span class="row-val">${fmt(inc)}</span></div>
+    <div class="row-item"><span class="row-label">Taxable Income</span><span class="row-val">${fmtR(inc)}</span></div>
     <div class="row-item"><span class="row-label">Tax Rate</span><span class="row-val">${(rate*100).toFixed(0)}%</span></div>
-    <div class="row-item"><span class="row-label">Gross Tax</span><span class="row-val">${fmt(gross)}</span></div>
-    <div class="row-item" style="background:var(--bluebg);padding:6px;border-radius:6px"><span class="row-label" style="font-weight:600;color:var(--blue2)">Tax Payable (est.)</span><span class="row-val" style="color:var(--blue2)">${fmt(pay)}</span></div>`;
-}
+    <div class="row-item"><span class="row-label">Gross Tax</span><span class="row-val">${fmtR(gross)}</span></div>
+    <div class="row-item" style="background:var(--bluebg);padding:6px;border-radius:6px">
+      <span class="row-label" style="font-weight:600;color:var(--blue2)">Est. Tax Payable</span>
+      <span class="row-val" style="color:var(--blue2)">${fmtR(pay)}</span></div>`;}
+
 function calcVAT(){
   const amt=parseFloat(document.getElementById('vatAmt').value)||0;
   const pct=(parseFloat(document.getElementById('inputVatPct').value)||0)/100;
   const out=amt*0.18,inp=out*pct,pay=out-inp;
   document.getElementById('vatResult').innerHTML=`
-    <div class="row-item"><span class="row-label">Output VAT (18%)</span><span class="row-val">${fmt(out)}</span></div>
-    <div class="row-item"><span class="row-label">Input VAT (${Math.round(pct*100)}%)</span><span class="row-val">${fmt(inp)}</span></div>
-    <div class="row-item" style="background:var(--bluebg);padding:6px;border-radius:6px"><span class="row-label" style="font-weight:600;color:var(--blue2)">VAT Payable</span><span class="row-val" style="color:var(--blue2)">${fmt(pay)}</span></div>`;
+    <div class="row-item"><span class="row-label">Output VAT (18%)</span><span class="row-val">${fmtR(out)}</span></div>
+    <div class="row-item"><span class="row-label">Input VAT</span><span class="row-val">${fmtR(inp)}</span></div>
+    <div class="row-item" style="background:var(--bluebg);padding:6px;border-radius:6px">
+      <span class="row-label" style="font-weight:600;color:var(--blue2)">VAT Payable</span>
+      <span class="row-val" style="color:var(--blue2)">${fmtR(pay)}</span></div>`;}
+
+// CHATBOT
+async function loadChatHist(){
+  showCoPanel('chat');
+  if(!cid) return;
+  const co=cdata?.company;
+  if(co) document.getElementById('chatCoName').textContent=`● ${co.name} — context loaded`;
+  try{
+    const res=await fetch(`${API}/api/chat/${cid}/history`);
+    const hist=await res.json();
+    const msgs=document.getElementById('chatMsgs');
+    msgs.innerHTML=hist.length?hist.map(m=>`
+      <div class="msg ${m.role==='user'?'user':'ai'}">
+        <div class="mav ${m.role==='user'?'usr':'ai'}"><i class="fa-solid fa-${m.role==='user'?'user':'robot'}"></i></div>
+        <div class="bubble">${fmt(m.message)}</div>
+      </div>`).join(''):`<div class="msg ai"><div class="mav ai"><i class="fa-solid fa-robot"></i></div><div class="bubble">ආයුබෝවන්! ${co?.name||'Company'} ගේ data load. ඕනෑ ප්‍රශ්නයක් අහන්න! 🎯</div></div>`;
+    msgs.scrollTop=msgs.scrollHeight;
+  }catch(e){}
 }
 
-// ─── FORMAT TEXT ───
-function formatText(t){
+async function clearChat(){
+  if(!cid||!confirm('Clear chat history?')) return;
+  await fetch(`${API}/api/chat/${cid}`,{method:'DELETE'});
+  loadChatHist();
+}
+
+function useChip(el){document.getElementById('chatInput').value=el.textContent;sendChat();}
+
+async function sendChat(){
+  if(!cid){alert('Select a company first!');return;}
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();
+  if(!text) return;
+  const msgs=document.getElementById('chatMsgs');
+  const btn=document.getElementById('sendBtn');
+  input.value='';btn.disabled=true;
+  msgs.innerHTML+=`<div class="msg user"><div class="mav usr"><i class="fa-solid fa-user"></i></div><div class="bubble">${text}</div></div>`;
+  const tid='t'+Date.now();
+  msgs.innerHTML+=`<div class="msg ai" id="${tid}"><div class="mav ai"><i class="fa-solid fa-robot"></i></div><div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>`;
+  msgs.scrollTop=msgs.scrollHeight;
+  try{
+    const res=await fetch(`${API}/api/chat`,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({company_id:cid,message:text})});
+    const d=await res.json();
+    const el=document.getElementById(tid);
+    if(el) el.querySelector('.bubble').innerHTML=fmt(d.reply);
+    msgs.scrollTop=msgs.scrollHeight;
+    document.getElementById('chipRow').style.display='none';
+  }catch(e){
+    const el=document.getElementById(tid);
+    if(el) el.querySelector('.bubble').textContent='Error: '+e.message;
+  }
+  btn.disabled=false;input.focus();
+}
+
+function fmt(t){
   if(!t) return '';
-  return t
-    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
-    .replace(/\n\n/g,'<br><br>')
-    .replace(/\n/g,'<br>');
+  return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
 }
 
-// ─── INIT ───
-calcTax();calcVAT();
-loadCompanies();
+calcTax();calcVAT();loadCompanies();
 </script>
 </body>
 </html>
+HTMLEOF
+echo "frontend done"
+Output
+
+frontend done
